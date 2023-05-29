@@ -2453,16 +2453,16 @@ collections:
             label: Text
             name: 6ffc699d
             widget: string
-          - hint: 'Original text: “Accept All Cookies”, key: -4a55ca57'
+          - hint: 'Original text: “Accept”, key: -60bb93a7'
             label: Text
-            name: '-4a55ca57'
+            name: '-60bb93a7'
             widget: string
           - hint: >-
-              Original text: , you agree to the storing of cookies on your
+              Original text: , you agree to the storing of all cookies on your
               device to enhance site navigation, analyze site usage, and assist
-              in our marketing efforts. View our , key: 5832979c
+              in our marketing efforts. View our , key: -3874b7a3
             label: Text
-            name: 5832979c
+            name: '-3874b7a3'
             widget: text
           - hint: 'Original text: Privacy Policy, key: -3fbde6f6'
             label: Text
