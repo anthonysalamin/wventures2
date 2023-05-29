@@ -1,7 +1,7 @@
 ---
 title: Portfolio details (Helper)
-permalink: utility/{{ page.fileSlug }}/index.html
-layout: utility/temp-details.html
+permalink: modules/{{ page.fileSlug }}/index.html
+layout: modules/temp-details.html
 slug: temp-details
 tags: pages
 seo:

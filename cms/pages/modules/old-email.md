@@ -1,7 +1,7 @@
 ---
 title: old email
-permalink: utility/{{ page.fileSlug }}/index.html
-layout: utility/old-email.html
+permalink: modules/{{ page.fileSlug }}/index.html
+layout: modules/old-email.html
 slug: old-email
 tags: pages
 seo:

@@ -1,7 +1,7 @@
 ---
 title: new email
-permalink: utility/{{ page.fileSlug }}/index.html
-layout: utility/new-email.html
+permalink: modules/{{ page.fileSlug }}/index.html
+layout: modules/new-email.html
 slug: new-email
 tags: pages
 seo:
