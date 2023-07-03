@@ -4,6 +4,7 @@ backend:
   accept_roles:
     - admin
     - editor
+  branch: master
 media_folder: theme/assets/images
 public_folder: /assets/images
 collections:
@@ -1838,6 +1839,30 @@ collections:
             label: Text
             name: '-659c9aa3'
             widget: text
+          - hint: 'Original text: Quilt, key: 4ac36ed'
+            label: Text
+            name: 4ac36ed
+            widget: string
+          - hint: 'Original text: quilt.com, key: 5d514320'
+            label: Text
+            name: 5d514320
+            widget: string
+          - hint: 'Original text: Redwood City, CA, key: 574fdc1f'
+            label: Text
+            name: 574fdc1f
+            widget: string
+          - hint: >-
+              Original text: Founded in Redwood City, CA, Quilt builds home heat
+              pump systems for a better climate. Its mission is to move humanity
+              off fossil fuel heating. Quilt’s integrated hardware and software
+              system offers stylish design and enables room-by-room control for
+              maximum comfort and efficiency. Quilt makes it easy to upgrade
+              from traditional heating systems through its technology-enabled,
+              direct-to-homeowner purchase-and-installation experience., key:
+              -4b0f2531
+            label: Text
+            name: '-4b0f2531'
+            widget: text
           - hint: 'Original text: b, key: 62'
             label: Text
             name: '62'
@@ -2830,6 +2855,10 @@ collections:
             label: Link
             name: 6b8abe26
             widget: string
+          - hint: 'Original link: https://www.quilt.com, key: 7e2a311a'
+            label: Link
+            name: 7e2a311a
+            widget: string
           - hint: 'Original link: /jp/portfolio, key: 3a03a96e'
             label: Link
             name: 3a03a96e
@@ -3568,6 +3597,19 @@ collections:
                 required: false
           - label: Image
             name: '-745ace06'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-61bb715a'
             widget: object
             fields:
               - name: url
