@@ -4,7 +4,6 @@ backend:
   accept_roles:
     - admin
     - editor
-  branch: master
 media_folder: theme/assets/images
 public_folder: /assets/images
 collections:
@@ -1325,37 +1324,6 @@ collections:
             label: Text
             name: '-4db93b68'
             widget: text
-          - hint: 'Original text: twentyone, key: 19d3f2d5'
-            label: Text
-            name: 19d3f2d5
-            widget: string
-          - hint: 'Original text: Alape GmbH, key: -3d31333f'
-            label: Text
-            name: '-3d31333f'
-            widget: string
-          - hint: 'Original text: alape.com, key: -2f1218e2'
-            label: Text
-            name: '-2f1218e2'
-            widget: string
-          - hint: 'Original text: Goslar, Germany, key: 48c4c28d'
-            label: Text
-            name: 48c4c28d
-            widget: string
-          - hint: >-
-              Original text: Since 1896, Alape has been manufacturing washbasins
-              and washstands made from glazed steel with the highest demands on
-              material, form and function. In their manufactory, they create
-              products which meet the fundamental needs for cleaning and
-              aesthetics in equal measure and which blend into differing living
-              environments. For more than 120 years, glazed steel has thereby
-              not only simply been a material but also the strongest source of
-              inspiration. Working with the composite material comprised of
-              titanium steel and enamel glaze spurs us on to achieve maximum
-              creative performance. Masterful craftsmanship, made in Germany.,
-              key: -4263f23f
-            label: Text
-            name: '-4263f23f'
-            widget: text
           - hint: 'Original text: twentytwo, key: 19d406bb'
             label: Text
             name: 19d406bb
@@ -1863,6 +1831,24 @@ collections:
             label: Text
             name: '-4b0f2531'
             widget: text
+          - hint: 'Original text: Numeral, key: -14034e02'
+            label: Text
+            name: '-14034e02'
+            widget: string
+          - hint: 'Original text: numeralhq.com, key: 328a56ba'
+            label: Text
+            name: 328a56ba
+            widget: string
+          - hint: 'Original text: San Francisco, CA, USA, key: 436672bd'
+            label: Text
+            name: 436672bd
+            widget: string
+          - hint: >-
+              Original text: Numeral automates all aspects of sales tax which
+              simplifies the sales tax process., key: 3f24ffc2
+            label: Text
+            name: 3f24ffc2
+            widget: string
           - hint: 'Original text: b, key: 62'
             label: Text
             name: '62'
@@ -2763,10 +2749,6 @@ collections:
             label: Link
             name: 6cd1226c
             widget: string
-          - hint: 'Original link: https://www.alape.com/en/, key: 59bd6f2f'
-            label: Link
-            name: 59bd6f2f
-            widget: string
           - hint: 'Original link: http://www.ifasec.de, key: 50693eb9'
             label: Link
             name: 50693eb9
@@ -2858,6 +2840,10 @@ collections:
           - hint: 'Original link: https://www.quilt.com, key: 7e2a311a'
             label: Link
             name: 7e2a311a
+            widget: string
+          - hint: 'Original link: https://www.numeralhq.com/, key: -23f0c105'
+            label: Link
+            name: '-23f0c105'
             widget: string
           - hint: 'Original link: /jp/portfolio, key: 3a03a96e'
             label: Link
@@ -3323,19 +3309,6 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: 11e132a4
-            widget: object
-            fields:
-              - name: url
-                label: Image Url
-                widget: image
-                allow_multiple: false
-                required: false
-              - name: alt
-                label: Image Alt
-                widget: string
-                required: false
-          - label: Image
             name: '-b87a4be'
             widget: object
             fields:
@@ -3610,6 +3583,19 @@ collections:
                 required: false
           - label: Image
             name: '-61bb715a'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-70ab3ff9'
             widget: object
             fields:
               - name: url
