@@ -1,9 +1,9 @@
 backend:
   name: git-gateway
-  branch: main
   accept_roles:
     - admin
     - editor
+  branch: main
 media_folder: theme/assets/images
 public_folder: /assets/images
 collections:
@@ -1849,6 +1849,23 @@ collections:
             label: Text
             name: 3f24ffc2
             widget: string
+          - hint: 'Original text: Enter, key: 40016b8'
+            label: Text
+            name: 40016b8
+            widget: string
+          - hint: 'Original text: enter.de, key: -7d85dca9'
+            label: Text
+            name: '-7d85dca9'
+            widget: string
+          - hint: >-
+              Original text: Enter helps millions of people to decarbonise their
+              homes by providing the easiest end-to-end solution of one-stop
+              energy audits, procurement, financing, and energy monitoring. With
+              Enter clients have all the data of their home in one app., key:
+              11731a3b
+            label: Text
+            name: 11731a3b
+            widget: text
           - hint: 'Original text: b, key: 62'
             label: Text
             name: '62'
@@ -2596,17 +2613,17 @@ collections:
             label: Link
             name: 413ec14a
             widget: string
-          - hint: 'Original link: /en/portfolio, key: -163df6ef'
+          - hint: 'Original link: /en/portfolio/, key: 4e7f193e'
             label: Link
-            name: '-163df6ef'
+            name: 4e7f193e
             widget: string
           - hint: 'Original link: #contact, key: 6c80469d'
             label: Link
             name: 6c80469d
             widget: string
-          - hint: 'Original link: /jp/home, key: -446e2f07'
+          - hint: 'Original link: /jp/home/, key: -4957b1aa'
             label: Link
-            name: '-446e2f07'
+            name: '-4957b1aa'
             widget: string
           - hint: 'Original link: /, key: 2f'
             label: Link
@@ -2634,13 +2651,13 @@ collections:
             label: Link
             name: '-220c9eaa'
             widget: string
-          - hint: 'Original link: /en/privacy-policy, key: 380a54ee'
+          - hint: 'Original link: /en/privacy-policy/, key: -36bfb6ff'
             label: Link
-            name: 380a54ee
+            name: '-36bfb6ff'
             widget: string
-          - hint: 'Original link: /en/imprint, key: -e7c61ee'
+          - hint: 'Original link: /en/imprint/, key: 3ef0245d'
             label: Link
-            name: '-e7c61ee'
+            name: 3ef0245d
             widget: string
           - hint: 'Original link: https://www.anthonysalamin.ch/, key: 64a1e758'
             label: Link
@@ -2661,13 +2678,13 @@ collections:
             label: Link
             name: '-7492f452'
             widget: string
-          - hint: 'Original link: /jp/imprint, key: -20844e51'
+          - hint: 'Original link: /jp/imprint/, key: ffa8460'
             label: Link
-            name: '-20844e51'
+            name: ffa8460
             widget: string
-          - hint: 'Original link: /jp/privacy-policy, key: -7180994f'
+          - hint: 'Original link: /jp/privacy-policy/, key: 416d6f9e'
             label: Link
-            name: '-7180994f'
+            name: 416d6f9e
             widget: string
           - hint: 'Original link: mailto:info@wventures.de, key: 44b84962'
             label: Link
@@ -2845,9 +2862,13 @@ collections:
             label: Link
             name: '-23f0c105'
             widget: string
-          - hint: 'Original link: /jp/portfolio, key: 3a03a96e'
+          - hint: 'Original link: https://www.enter.de/, key: -125cca4e'
             label: Link
-            name: 3a03a96e
+            name: '-125cca4e'
+            widget: string
+          - hint: 'Original link: /jp/portfolio/, key: 6718481'
+            label: Link
+            name: '6718481'
             widget: string
           - hint: 'Original link: #, key: 23'
             label: Link
@@ -3596,6 +3617,19 @@ collections:
                 required: false
           - label: Image
             name: '-70ab3ff9'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: dbda739
             widget: object
             fields:
               - name: url
