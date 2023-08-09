@@ -1732,22 +1732,6 @@ collections:
             label: Text
             name: '-6af2e092'
             widget: text
-          - hint: 'Original text: baupal, key: -53374b3b'
-            label: Text
-            name: '-53374b3b'
-            widget: string
-          - hint: 'Original text: baupal.de, key: 1065124a'
-            label: Text
-            name: 1065124a
-            widget: string
-          - hint: >-
-              Original text: Baupal is an automized energy audit and robo
-              advisor. Homeowners can check with Baupal the energetic status
-              /potential for their house, apply for state subsidies and find
-              suitable products & contractors., key: -68dc7b31
-            label: Text
-            name: '-68dc7b31'
-            widget: text
           - hint: 'Original text: Lockerverse, key: -76a1e303'
             label: Text
             name: '-76a1e303'
@@ -2838,10 +2822,6 @@ collections:
             label: Link
             name: 15556fd0
             widget: string
-          - hint: 'Original link: https://www.baupal.de/, key: -97df795'
-            label: Link
-            name: '-97df795'
-            widget: string
           - hint: 'Original link: https://www.lockerverse.com/, key: -da79e3b'
             label: Link
             name: '-da79e3b'
@@ -3539,19 +3519,6 @@ collections:
                 required: false
           - label: Image
             name: 612debfc
-            widget: object
-            fields:
-              - name: url
-                label: Image Url
-                widget: image
-                allow_multiple: false
-                required: false
-              - name: alt
-                label: Image Alt
-                widget: string
-                required: false
-          - label: Image
-            name: '-264fbd2e'
             widget: object
             fields:
               - name: url
