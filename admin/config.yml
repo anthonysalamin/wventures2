@@ -28,7 +28,8 @@ collections:
         widget: hidden
         name: layout
         default: '{{slug}}.html'
-      - label: Seo
+      - &ref_0
+        label: Seo
         name: seo
         widget: object
         collapsed: true
@@ -79,6 +80,88 @@ collections:
             name: additional_tags
             widget: text
             required: false
+  - name: portfolio
+    label: Portfolios
+    folder: cms/portfolio
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: Description
+        name: body
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_logotype
+        label: Logotype
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: If yes switch on
+        name: f_not-active
+        label: Exited ?
+        widget: boolean
+        required: false
+        default: false
+      - hint: 'example: Berlin, Germany'
+        name: f_location
+        label: Location
+        widget: string
+        required: false
+      - hint: ''
+        name: f_website-name
+        label: Website name
+        widget: string
+        required: false
+      - hint: ''
+        name: f_website-link
+        label: Website link
+        widget: string
+        required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: portfolio
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[portfolio].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
   - label: Theme Settings
     name: settings
     identifier_field: title
@@ -1850,6 +1933,27 @@ collections:
             label: Text
             name: 11731a3b
             widget: text
+          - hint: 'Original text: Medmo, key: 46c804e'
+            label: Text
+            name: 46c804e
+            widget: string
+          - hint: 'Original text: medmo.com, key: -78e40bff'
+            label: Text
+            name: '-78e40bff'
+            widget: string
+          - hint: 'Original text: New York, NY, USA, key: 6d8d8ae1'
+            label: Text
+            name: 6d8d8ae1
+            widget: string
+          - hint: >-
+              Original text: Medmo is a healthcare platform that gives uninsured
+              and underinsured consumers the freedom to obtain medical imaging
+              services at a price they can afford, without hidden fees or
+              confusion, from accredited healthcare providers in their area.,
+              key: 77e12519
+            label: Text
+            name: '77e12519'
+            widget: text
           - hint: 'Original text: b, key: 62'
             label: Text
             name: '62'
@@ -2846,6 +2950,10 @@ collections:
             label: Link
             name: '-125cca4e'
             widget: string
+          - hint: 'Original link: https://www.medmo.com/about/, key: 61272cd6'
+            label: Link
+            name: 61272cd6
+            widget: string
           - hint: 'Original link: /jp/portfolio/, key: 6718481'
             label: Link
             name: '6718481'
@@ -3597,6 +3705,19 @@ collections:
                 required: false
           - label: Image
             name: dbda739
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 5dc8d87f
             widget: object
             fields:
               - name: url
