@@ -14,10 +14,10 @@ collections:
     create: false
     delete: false
     slug: '{{slug}}'
-    editor:
+    editor: &ref_0
       preview: false
     folder: cms/pages
-    fields:
+    fields: &ref_1
       - label: Title
         name: title
         widget: string
@@ -28,7 +28,7 @@ collections:
         widget: hidden
         name: layout
         default: '{{slug}}.html'
-      - &ref_0
+      - &ref_2
         label: Seo
         name: seo
         widget: object
@@ -76,10 +76,47 @@ collections:
             name: twitter:creator
             widget: string
             required: false
+          - label: Twitter Image
+            name: twitter:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
           - label: Additional HTML tags
             name: additional_tags
             widget: text
             required: false
+  - name: pages-en
+    label: Pages en
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor: *ref_0
+    folder: cms/pages/en
+    fields: *ref_1
+  - name: pages-modules
+    label: Pages modules
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor: *ref_0
+    folder: cms/pages/modules
+    fields: *ref_1
+  - name: pages-jp
+    label: Pages jp
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor: *ref_0
+    folder: cms/pages/jp
+    fields: *ref_1
   - name: portfolio
     label: Portfolios
     folder: cms/portfolio
@@ -161,7 +198,7 @@ collections:
       - label: Publish Date
         name: date
         widget: datetime
-      - *ref_0
+      - *ref_2
   - label: Theme Settings
     name: settings
     identifier_field: title
@@ -1132,40 +1169,6 @@ collections:
               sectors transform the way they use their data., key: 7d88bda6
             label: Text
             name: 7d88bda6
-            widget: text
-          - hint: 'Original text: ten, key: 1c01d'
-            label: Text
-            name: 1c01d
-            widget: string
-          - hint: 'Original text: Sava, key: 273599'
-            label: Text
-            name: '273599'
-            widget: string
-          - hint: 'Original text: getsava.com, key: -3d35f1e'
-            label: Text
-            name: '-3d35f1e'
-            widget: string
-          - hint: >-
-              Original text: Sava is changing the way people buy, try, and enjoy
-              cannabis. As the leading cannabis ecommerce marketplace -
-              appealing to newcomers and connoisseurs alike - Sava rigorously
-              vets the vast world of cannabis and hand-picks the highest quality
-              products. Their industry-leading ecommerce experience is built to
-              demystify the plant and match you with your perfect products. Sava
-              delivers everything right to your door using a professional
-              employee-driver fleet. They've built a trusted source for cannabis
-              discovery and delivery in the Bay Area, which has led to steady
-              new customer acquisition and extremely high retention rates. By
-              tailoring to scheduled delivery instead of on-demand and utilizing
-              ecommerce best practices to create an enticing shopping
-              experience, their customers make thoughtful, planned purchases of
-              multiple items, giving them an industry-leading average order
-              value. They oversee the delivery experience from order placement
-              to customer receipt, which leads to high margins. They've cracked
-              the code on how to make cannabis ecommerce profitable and are
-              poised for growth., key: 9ecb569
-            label: Text
-            name: 9ecb569
             widget: text
           - hint: 'Original text: eleven, key: -4d84edbf'
             label: Text
@@ -2814,10 +2817,6 @@ collections:
             label: Link
             name: 76c66ab1
             widget: string
-          - hint: 'Original link: http://www.getsava.com, key: d9f2ab9'
-            label: Link
-            name: d9f2ab9
-            widget: string
           - hint: 'Original link: https://getbloomfarms.com, key: 413c8e54'
             label: Link
             name: 413c8e54
@@ -3289,19 +3288,6 @@ collections:
                 required: false
           - label: Image
             name: '-5993b6de'
-            widget: object
-            fields:
-              - name: url
-                label: Image Url
-                widget: image
-                allow_multiple: false
-                required: false
-              - name: alt
-                label: Image Alt
-                widget: string
-                required: false
-          - label: Image
-            name: '-1ee3f5b2'
             widget: object
             fields:
               - name: url
