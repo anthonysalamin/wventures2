@@ -514,14 +514,20 @@ collections:
             name: 3ab5ccc1
             widget: text
           - hint: >-
-              Original text: © 2023 W Ventures GmbH. All rights reserved., key:
-              74c7b707
+              Original text: © 2024 W Ventures GmbH. All rights reserved., key:
+              3dc8ae48
             label: Text
-            name: 74c7b707
+            name: 3dc8ae48
             widget: string
-          - hint: 'Original text: Webdesign & Development by , key: -27d3bc84'
+          - hint: >-
+              Original text: Registered in U.S. Patent and Trademark Office.,
+              key: -2b4b882f
             label: Text
-            name: '-27d3bc84'
+            name: '-2b4b882f'
+            widget: string
+          - hint: 'Original text: Design & Development by , key: -77cd8f98'
+            label: Text
+            name: '-77cd8f98'
             widget: string
           - hint: 'Original text: anthonysalamin.ch, key: -67104443'
             label: Text
@@ -534,6 +540,12 @@ collections:
           - hint: 'Original text: Angaben gem. § 5 TMG, key: -485cf93b'
             label: Text
             name: '-485cf93b'
+            widget: string
+          - hint: >-
+              Original text: W Ventures GmbH beim US-Patent- und Markenamt
+              eingetragen., key: -44651516
+            label: Text
+            name: '-44651516'
             widget: string
           - hint: 'Original text: Betreiber und Kontakt, key: -6e8fe66b'
             label: Text
@@ -2169,10 +2181,14 @@ collections:
             name: '-20098f08'
             widget: text
           - hint: >-
-              Original text: © 2021 W Ventures GmbH. すべての権利は留保されています。, key:
-              775b1ab0
+              Original text: © 2024 W Ventures GmbH. すべての権利は留保されています。, key:
+              -541aa60d
             label: Text
-            name: 775b1ab0
+            name: '-541aa60d'
+            widget: string
+          - hint: 'Original text: W Ventures GmbHが米国特許商標庁に登録, key: -5e26c881'
+            label: Text
+            name: '-5e26c881'
             widget: string
           - hint: 'Original text: ウェブデザイン・開発 y , key: -507a090'
             label: Text
@@ -3053,7 +3069,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: '69142674'
+            name: 66c3cb49
             widget: object
             fields:
               - name: url
@@ -3092,7 +3108,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: 43302f04
+            name: '-7f7c73c0'
             widget: object
             fields:
               - name: url
@@ -3144,7 +3160,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: '-3b80be5a'
+            name: 2a7281
             widget: object
             fields:
               - name: url
