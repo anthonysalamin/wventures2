@@ -1,0 +1,3760 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+    - editor
+  branch: main
+media_folder: theme/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor: &ref_0
+      preview: false
+    folder: cms/pages
+    fields: &ref_1
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '{{slug}}.html'
+      - &ref_2
+        label: Seo
+        name: seo
+        widget: object
+        collapsed: true
+        fields:
+          - label: Title
+            name: title
+            widget: string
+            required: false
+          - label: Description
+            name: description
+            widget: string
+            required: false
+          - label: No index
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+          - label: Open Graph Title
+            name: og:title
+            widget: string
+            required: false
+          - label: Open Graph Image
+            name: og:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Twitter Title
+            name: twitter:title
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Card
+            name: twitter:card
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Site
+            name: twitter:site
+            widget: string
+            required: false
+          - label: Twitter Creator
+            name: twitter:creator
+            widget: string
+            required: false
+          - label: Twitter Image
+            name: twitter:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Additional HTML tags
+            name: additional_tags
+            widget: text
+            required: false
+  - name: pages-en
+    label: Pages en
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor: *ref_0
+    folder: cms/pages/en
+    fields: *ref_1
+  - name: pages-modules
+    label: Pages modules
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor: *ref_0
+    folder: cms/pages/modules
+    fields: *ref_1
+  - name: pages-jp
+    label: Pages jp
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor: *ref_0
+    folder: cms/pages/jp
+    fields: *ref_1
+  - name: portfolio
+    label: Portfolios
+    folder: cms/portfolio
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: Description
+        name: body
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_logotype
+        label: Logotype
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: If yes switch on
+        name: f_not-active
+        label: Exited ?
+        widget: boolean
+        required: false
+        default: false
+      - hint: 'example: Berlin, Germany'
+        name: f_location
+        label: Location
+        widget: string
+        required: false
+      - hint: ''
+        name: f_website-name
+        label: Website name
+        widget: string
+        required: false
+      - hint: ''
+        name: f_website-link
+        label: Website link
+        widget: string
+        required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: portfolio
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[portfolio].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_2
+  - label: Theme Settings
+    name: settings
+    identifier_field: title
+    extension: json
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    files:
+      - label: General
+        name: site
+        file: cms/_data/settings/site.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: General
+          - hint: Full domain url (needed for a correct sitemap file)
+            name: domain
+            label: Domain
+            widget: string
+            required: false
+          - name: favicon
+            label: Favicon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: apple_touch_icon
+            label: Apple Touch Icon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: header_additional_content
+            label: Additional Content Header
+            hint: Content here will be placed before </head> tag
+            widget: text
+            required: false
+          - name: footer_additional_content
+            label: Additional Content Footer
+            hint: Content here will be placed before </body> tag
+            widget: text
+            required: false
+          - name: images_optimization
+            label: Images Optimization
+            widget: object
+            collapsed: false
+            fields:
+              - label: Image Formats
+                name: formats
+                widget: select
+                multiple: true
+                options:
+                  - label: Avif
+                    value: avif
+                  - label: Webp
+                    value: webp
+              - label: Image Dimensions
+                name: dimensions
+                widget: select
+                multiple: true
+                options:
+                  - label: '500'
+                    value: 500
+                  - label: '800'
+                    value: 800
+                  - label: '1080'
+                    value: 1080
+                  - label: '1600'
+                    value: 1600
+                  - label: '2000'
+                    value: 2000
+                  - label: '2600'
+                    value: 2600
+      - label: Colors
+        name: colors
+        file: cms/_data/colors.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Colors
+      - label: Texts
+        name: texts
+        file: cms/_data/texts.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Texts
+          - hint: 'Original text: About, key: 3c2336d'
+            label: Text
+            name: 3c2336d
+            widget: string
+          - hint: 'Original text: Portfolio, key: -45b0dad8'
+            label: Text
+            name: '-45b0dad8'
+            widget: string
+          - hint: 'Original text: Contact, key: -64104400'
+            label: Text
+            name: '-64104400'
+            widget: string
+          - hint: 'Original text: JP, key: 946'
+            label: Text
+            name: '946'
+            widget: string
+          - hint: >-
+              Original text: W Ventures is a Berlin/Germany based Venture
+              Capital company that offers a complete framework for the
+              acceleration of digital business ideas for leading international
+              companies in key B2B and B2C sectors. We are an operational VC,
+              technology provider and innovation hub together with our industry,
+              technology and strategic Private Equity and VC partners. We invest
+              and support ventures from seed to growth., key: 3264764f
+            label: Text
+            name: 3264764f
+            widget: text
+          - hint: 'Original text: Industry Segments, key: 7270c3a2'
+            label: Text
+            name: 7270c3a2
+            widget: string
+          - hint: >-
+              Original text: Energy, Industrial, Commerce, Security, Digital
+              Health, Mobility, Finance, IT, Real Estate & Construction,
+              Business Software, Fintech, InsurTech, Manufacturing & Industry
+              4.0, Marketing, Media, Mobility & Logistics., key: 1ece4608
+            label: Text
+            name: 1ece4608
+            widget: text
+          - hint: 'Original text: W Ventures, key: 144c6809'
+            label: Text
+            name: 144c6809
+            widget: string
+          - hint: >-
+              Original text: Venture Capital from seed to growth, Strategy
+              Consulting, Ideation, Validation of models, Prototyping, Business
+              Development & Project Management., key: 1b574024
+            label: Text
+            name: 1b574024
+            widget: text
+          - hint: 'Original text: Strategic Partners, key: -507d8055'
+            label: Text
+            name: '-507d8055'
+            widget: string
+          - hint: >-
+              Original text: Strategic partnerships with leading international
+              VC’s & Private Equity Partners, Family Offices and leading
+              technology partners., key: 2b0e5d18
+            label: Text
+            name: 2b0e5d18
+            widget: text
+          - hint: 'Original text: Headquarters, key: 1660f547'
+            label: Text
+            name: 1660f547
+            widget: string
+          - hint: 'Original text: Berlin & Dortmund, Germany, key: -4ddf09e4'
+            label: Text
+            name: '-4ddf09e4'
+            widget: string
+          - hint: 'Original text: Specialties, key: 2f7835fc'
+            label: Text
+            name: 2f7835fc
+            widget: string
+          - hint: >-
+              Original text: Internet, E-Commerce, Enterprise IT, Venture
+              Capital, Seed Funding, Business Intelligence, Digital
+              Transformation, Performance Marketing, B2B, B2C, Co-Creation,
+              Product Development, Investment, Family Oﬃce, Private Equity,
+              Consulting, Startup and Construction., key: 1258c0ae
+            label: Text
+            name: 1258c0ae
+            widget: text
+          - hint: 'Original text: Founding Year, key: -7b5ce8c3'
+            label: Text
+            name: '-7b5ce8c3'
+            widget: string
+          - hint: 'Original text: 2013, key: 1774e0'
+            label: Text
+            name: '1774e0'
+            widget: string
+          - hint: >-
+              Original text: W ventures provides guidance and support in the
+              following fields, with a focus in the USA, Europe and Asia/Japan.,
+              key: -47db8a27
+            label: Text
+            name: '-47db8a27'
+            widget: text
+          - hint: 'Original text: Business, key: -4080dc20'
+            label: Text
+            name: '-4080dc20'
+            widget: string
+          - hint: >-
+              Original text: Business management, administration and
+              consultancy, key: 637779bb
+            label: Text
+            name: 637779bb
+            widget: string
+          - hint: >-
+              Original text: Development and marketing of businesses, key:
+              -425406f1
+            label: Text
+            name: '-425406f1'
+            widget: string
+          - hint: 'Original text: Data analysis, key: -67efad8e'
+            label: Text
+            name: '-67efad8e'
+            widget: string
+          - hint: 'Original text: Finance, key: 305ce7ba'
+            label: Text
+            name: 305ce7ba
+            widget: string
+          - hint: >-
+              Original text: Financial consulting to startups and emerging
+              businesses, key: -551321c3
+            label: Text
+            name: '-551321c3'
+            widget: string
+          - hint: 'Original text: Investment consulting, key: -29fa783d'
+            label: Text
+            name: '-29fa783d'
+            widget: string
+          - hint: >-
+              Original text: Venture capital lending and fund management, key:
+              -5a183ebd
+            label: Text
+            name: '-5a183ebd'
+            widget: string
+          - hint: 'Original text: Coaching, key: -351386d8'
+            label: Text
+            name: '-351386d8'
+            widget: string
+          - hint: >-
+              Original text: Financial, economic and management coaching, key:
+              -3dd9cf12
+            label: Text
+            name: '-3dd9cf12'
+            widget: string
+          - hint: 'Original text: Let''s talk., key: -683917f7'
+            label: Text
+            name: '-683917f7'
+            widget: string
+          - hint: 'Original text: info@wventures.de, key: -4d607b96'
+            label: Text
+            name: '-4d607b96'
+            widget: string
+          - hint: 'Original text: W Ventures GmbH, key: 44751163'
+            label: Text
+            name: '44751163'
+            widget: string
+          - hint: 'Original text: Goethestraße 81, key: 3c5f2f2f'
+            label: Text
+            name: 3c5f2f2f
+            widget: string
+          - hint: |-
+              Original text: 
+                            10623 Berlin, key: -66de9a0c
+            label: Text
+            name: '-66de9a0c'
+            widget: string
+          - hint: 'Original text: Germany, key: 5ead6393'
+            label: Text
+            name: 5ead6393
+            widget: string
+          - hint: 'Original text: Lissaboner Allee 1, key: -18f59704'
+            label: Text
+            name: '-18f59704'
+            widget: string
+          - hint: |-
+              Original text: 
+                            44269 Dortmund, key: 5bd6be0
+            label: Text
+            name: 5bd6be0
+            widget: string
+          - hint: 'Original text: Info@wventures.de, key: -629c3bb6'
+            label: Text
+            name: '-629c3bb6'
+            widget: string
+          - hint: 'Original text: www.wventures.de, key: -33a1d6f1'
+            label: Text
+            name: '-33a1d6f1'
+            widget: string
+          - hint: 'Original text: LinkedIn Profile, key: 6e0e90a7'
+            label: Text
+            name: 6e0e90a7
+            widget: string
+          - hint: |-
+              Original text: +49 30 318 00 443
+                          , key: -7877c5c2
+            label: Text
+            name: '-7877c5c2'
+            widget: string
+          - hint: 'Original text: Privacy Policy , key: 48010856'
+            label: Text
+            name: '48010856'
+            widget: string
+          - hint: 'Original text: Imprint, key: -29f92c17'
+            label: Text
+            name: '-29f92c17'
+            widget: string
+          - hint: >-
+              Original text: As an investor, W Ventures is a member of the
+              Federal Association of German Startups, key: 3d97730a
+            label: Text
+            name: 3d97730a
+            widget: string
+          - hint: >-
+              Original text: Together, we are working to improve the financing
+              conditions for startups. On the one hand, this means modernizing
+              the economic and financial policy framework and, on the other
+              hand, the relevant networks for exchanging experience and
+              know-how., key: 3ab5ccc1
+            label: Text
+            name: 3ab5ccc1
+            widget: text
+          - hint: >-
+              Original text: © 2024 W Ventures GmbH. All rights reserved., key:
+              3dc8ae48
+            label: Text
+            name: 3dc8ae48
+            widget: string
+          - hint: >-
+              Original text: Registered in U.S. Patent and Trademark Office.,
+              key: -2b4b882f
+            label: Text
+            name: '-2b4b882f'
+            widget: string
+          - hint: 'Original text: Design & Development by , key: -77cd8f98'
+            label: Text
+            name: '-77cd8f98'
+            widget: string
+          - hint: 'Original text: anthonysalamin.ch, key: -67104443'
+            label: Text
+            name: '-67104443'
+            widget: string
+          - hint: 'Original text: IMPRINT, key: -62663817'
+            label: Text
+            name: '-62663817'
+            widget: string
+          - hint: 'Original text: Angaben gem. § 5 TMG, key: -485cf93b'
+            label: Text
+            name: '-485cf93b'
+            widget: string
+          - hint: >-
+              Original text: W Ventures GmbH beim US-Patent- und Markenamt
+              eingetragen., key: -44651516
+            label: Text
+            name: '-44651516'
+            widget: string
+          - hint: 'Original text: Betreiber und Kontakt, key: -6e8fe66b'
+            label: Text
+            name: '-6e8fe66b'
+            widget: string
+          - hint: 'Original text: D-44269 Dortmund, key: 3094ff7f'
+            label: Text
+            name: 3094ff7f
+            widget: string
+          - hint: 'Original text: Kontakt, key: 43219700'
+            label: Text
+            name: '43219700'
+            widget: string
+          - hint: 'Original text: E-Mail: info@wventures.de, key: -8a542bb'
+            label: Text
+            name: '-8a542bb'
+            widget: string
+          - hint: 'Original text: Eintragung im Handelsregister, key: 2188c8a4'
+            label: Text
+            name: 2188c8a4
+            widget: string
+          - hint: 'Original text: Registergericht: Amtsgericht Hagen, key: -16daa597'
+            label: Text
+            name: '-16daa597'
+            widget: string
+          - hint: 'Original text: Registernummer: HRB 9658, key: -746b595b'
+            label: Text
+            name: '-746b595b'
+            widget: string
+          - hint: 'Original text: Vertretung, key: -6d6d22c2'
+            label: Text
+            name: '-6d6d22c2'
+            widget: string
+          - hint: >-
+              Original text: W Ventures GmbH wird vertreten durch Jochen M.
+              Wilms, key: -717bd512
+            label: Text
+            name: '-717bd512'
+            widget: string
+          - hint: 'Original text: Verantwortung, key: 29225b90'
+            label: Text
+            name: 29225b90
+            widget: string
+          - hint: >-
+              Original text: Verantwortlicher für journalistisch-redaktionelle
+              Inhalte gem. § 55 II RstV, key: fc267b7
+            label: Text
+            name: fc267b7
+            widget: string
+          - hint: >-
+              Original text: Das Impressum gilt auch für folgende Social Media
+              Seiten, key: -a123c95
+            label: Text
+            name: '-a123c95'
+            widget: string
+          - hint: >-
+              Original text: https://www.linkedin.com/company/11273519/, key:
+              -220c9eaa
+            label: Text
+            name: '-220c9eaa'
+            widget: string
+          - hint: >-
+              Original text: Online-Streitbeilegung gemäß Art. 14 Abs. 1 ODR-VO,
+              key: -1654b275
+            label: Text
+            name: '-1654b275'
+            widget: string
+          - hint: "Original text: Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS)\_bereit, die Sie unter http://ec.europa.eu/consumers/odr/ ﬁnden.Impressum dieser Website erstellt über den Generator der Deutschen\_Anwaltshotline AG, key: -33f4a0f3"
+            label: Text
+            name: '-33f4a0f3'
+            widget: text
+          - hint: 'Original text: Haftungsausschluss, key: -6da66772'
+            label: Text
+            name: '-6da66772'
+            widget: string
+          - hint: 'Original text: Haftung für Inhalte:, key: 5b0a1f58'
+            label: Text
+            name: 5b0a1f58
+            widget: string
+          - hint: >-
+              Original text: Die Inhalte unserer Seiten wurden mit größter
+              Sorgfalt erstellt., key: 29431d7a
+            label: Text
+            name: 29431d7a
+            widget: string
+          - hint: "Original text: Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch\_keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG füreigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpﬂichtet,\_übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach\_Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.\_Verpﬂichtungen zur Entfernung oder Sperrung der Nutzung von Informationen\_nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche\_Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten\_Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden\_Rechtsverletzungen werden wir diese Inhalte umgehend entfernen., key: -4974d423"
+            label: Text
+            name: '-4974d423'
+            widget: text
+          - hint: 'Original text: Haftung für Links:, key: -73fd9ba2'
+            label: Text
+            name: '-73fd9ba2'
+            widget: string
+          - hint: "Original text: Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir\_keinen Einﬂuss haben. Deshalb können wir für diese fremden Inhalte auch keine\_Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige\_Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden\_zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft.\_Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine\_permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete\_Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von\_Rechtsverletzungen werden wir derartige Links umgehend entfernen., key: -60849ce4"
+            label: Text
+            name: '-60849ce4'
+            widget: text
+          - hint: 'Original text: Urheberrecht:, key: -6eab0bcd'
+            label: Text
+            name: '-6eab0bcd'
+            widget: string
+          - hint: "Original text: Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten\_unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung,\_Verbreitung und jede Art der Verwertung außerhalb der Grenzen des\_Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw.\_Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht\_kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom\_Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere\_werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine\_Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden\_Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte\_umgehend entfernen., key: -7182e5d5"
+            label: Text
+            name: '-7182e5d5'
+            widget: text
+          - hint: 'Original text: PRIVACY POLICY, key: 4d62acea'
+            label: Text
+            name: 4d62acea
+            widget: string
+          - hint: 'Original text: Data Protection W Ventures GmbH, key: -1d91a7ae'
+            label: Text
+            name: '-1d91a7ae'
+            widget: string
+          - hint: "Original text: In the following, we would like to inform you about the collection, processing and\_utilization of personal data within our website. The cautious handling of personal\_information is a matter of great concern to us. When processing your personal\_data, we comply with the legal requirements and protect your privacy., key: -28bc147"
+            label: Text
+            name: '-28bc147'
+            widget: text
+          - hint: "Original text: You can print or save this document by using the usual functionality of your\_browser (typically save ﬁle as). You can also download and archive this ﬁle by\_clicking here. In order to open the PDF-document you will need the program\_Adobe Reader www.adobe.de, which comes at no cost, or similar programs, which\_can open the PDF-format., key: -5d1608ff"
+            label: Text
+            name: '-5d1608ff'
+            widget: text
+          - hint: >-
+              Original text: 1. Person of Contact and Possibility of Opposition,
+              key: -9b9d024
+            label: Text
+            name: '-9b9d024'
+            widget: string
+          - hint: "Original text: Contact person and so called responsible body for the collection, processing and\_utilization of your personal data according to the Federal Data Protection Act, as\_well as a service provider in the sense of the Telemedia Act is the, key: -927f409"
+            label: Text
+            name: '-927f409'
+            widget: text
+          - hint: 'Original text: D-10623 Berlin, key: -6e48aaad'
+            label: Text
+            name: '-6e48aaad'
+            widget: string
+          - hint: 'Original text: ‍, key: 200d'
+            label: Text
+            name: 200d
+            widget: string
+          - hint: 'Original text: Email: , key: 19673a2'
+            label: Text
+            name: 19673a2
+            widget: string
+          - hint: "Original text: If you wish to object to the collection, processing or use of your data as a whole, or\_for individual measures according to this data protection policy, you can send your\_objection by e-mail, fax or letter to the above-mentioned contact data., key: -7cda4190"
+            label: Text
+            name: '-7cda4190'
+            widget: text
+          - hint: >-
+              Original text: 2. Collection, processing and utilization of
+              personal data, key: -60cac381
+            label: Text
+            name: '-60cac381'
+            widget: string
+          - hint: "Original text: If you use our website or interact with our website (for example ﬁll in and submit\_the contact form), we collect, process and use personal data., key: -2b13025b"
+            label: Text
+            name: '-2b13025b'
+            widget: text
+          - hint: 'Original text: 2.1. Personal Data, key: -4033e8fd'
+            label: Text
+            name: '-4033e8fd'
+            widget: string
+          - hint: "Original text: Personal data refers to data about the objective or personal aﬀairs of a speciﬁed or\_speciﬁable natural person. This includes particularly information that allow for\_conclusions regarding your identity, for example your name, your telephone\_number, your address or e-mail address. Statistical data that we collect, for\_example, when you visit our website and which cannot be directly linked to your\_person, do not come under the concept of the personal date., key: 4fc17373"
+            label: Text
+            name: 4fc17373
+            widget: text
+          - hint: 'Original text: 2.2. Informative Use, key: 650ee27b'
+            label: Text
+            name: 650ee27b
+            widget: string
+          - hint: "Original text: In the case of the mere informative use of the website, we do not collect any\_personal data, except for the data transmitted by your browser to enable you to\_visit the website. These are:, key: -1efaa791"
+            label: Text
+            name: '-1efaa791'
+            widget: text
+          - hint: 'Original text: IP address, key: -49eed605'
+            label: Text
+            name: '-49eed605'
+            widget: string
+          - hint: 'Original text: Date and time of the request, key: -45f67751'
+            label: Text
+            name: '-45f67751'
+            widget: string
+          - hint: >-
+              Original text: Time zone diﬀerence to Greenwich Mean Time (GMT),
+              key: -2dffff2
+            label: Text
+            name: '-2dffff2'
+            widget: string
+          - hint: >-
+              Original text: Content of the request (concrete page), key:
+              2a8213e5
+            label: Text
+            name: 2a8213e5
+            widget: string
+          - hint: 'Original text: Access Status / , key: 551e2103'
+            label: Text
+            name: '551e2103'
+            widget: string
+          - hint: 'Original text: HTTP , key: 41e1098'
+            label: Text
+            name: '41e1098'
+            widget: string
+          - hint: 'Original text: status code, key: -389e0aa5'
+            label: Text
+            name: '-389e0aa5'
+            widget: string
+          - hint: 'Original text: The amount of data transferred, key: -3e0f3e20'
+            label: Text
+            name: '-3e0f3e20'
+            widget: string
+          - hint: >-
+              Original text: Website from which the request comes, key:
+              -4dd01085
+            label: Text
+            name: '-4dd01085'
+            widget: string
+          - hint: 'Original text: Browser, key: 6c37c308'
+            label: Text
+            name: 6c37c308
+            widget: string
+          - hint: 'Original text: Operating system and its surface, key: 27cf025a'
+            label: Text
+            name: 27cf025a
+            widget: string
+          - hint: 'Original text: Language and version of the browser., key: -39ad6bb'
+            label: Text
+            name: '-39ad6bb'
+            widget: string
+          - hint: "Original text: The IP addresses of the users are deleted or anonymised after the end of the\_usage. In the case of anonymization, the IP addresses are changed in such a way\_that the individual details about personal or objective aﬀairs can no longer, or only\_with a disproportionate amount of time, costs and labor power, be assigned to a\_speciﬁed or speciﬁable natural person. The data in the so-called log ﬁles are\_evaluated anonymously by us in order to further improve the W Ventures website and to make it more user-friendly, as well as to ﬁnd and correct errors more\_quickly. In addition, they are used to control the server capacities, in order to be\_able to provide corresponding data volumes in case of need., key: 43df396a"
+            label: Text
+            name: 43df396a
+            widget: text
+          - hint: >-
+              Original text: 2.3. Disclosure of Data to Third Parties, key:
+              -da24823
+            label: Text
+            name: '-da24823'
+            widget: string
+          - hint: "Original text: The transfer of the data collected by W Ventures to third parties only takes place if\_this is necessary for the purpose of contract processing or settlement, or if you\_have previously given your consent. The data thus provided may only be used by\_our service providers to fulﬁl their task. These were carefully selected by us and\_commissioned in writing. They are bound by our instructions and regularly checked\_by us. Any other use of the information is not permitted and is likewise not carried\_out by any of our service providers., key: -14eb9655"
+            label: Text
+            name: '-14eb9655'
+            widget: text
+          - hint: 'Original text: 3. Cookies, key: -18f30e56'
+            label: Text
+            name: '-18f30e56'
+            widget: string
+          - hint: "Original text: Cookies are small ﬁles that are stored on your data carrier and store certain\_settings and data for exchange with our system via your browser. Cookies cannot\_run programs or transmit viruses to your computer. They aim at making the\_Internet oﬀer more user-friendly and eﬀective., key: -34a7e93f"
+            label: Text
+            name: '-34a7e93f'
+            widget: text
+          - hint: "Original text: Basically, two diﬀerent types of cookies exist, so-called session cookies, which are\_deleted, as soon as you close your browser (= end of the session) and temporary /\_permanent cookies, which are stored for an extended period or unlimited on your\_data carrier. This storage helps us to design our website and makes it easier for you\_to use it, by storing speciﬁc entries so that you do not have to repeat them all the\_time., key: -644bba5c"
+            label: Text
+            name: '-644bba5c'
+            widget: text
+          - hint: "Original text: You may delete the cookies in the security settings of your browser at any time and\_conﬁgure your browser settings according to your needs (for example, accepting\_third party cookies or rejecting all cookies). As a rule, you will be shown how to\_reject new cookies and delete already received ones in the menu bar of your web\_browser. However, we would point out that you may not be able to use all the\_features of our website., key: 6f6fa922"
+            label: Text
+            name: 6f6fa922
+            widget: text
+          - hint: 'Original text: 3.1. Cookies at W Ventures, key: -33819e43'
+            label: Text
+            name: '-33819e43'
+            widget: string
+          - hint: "Original text: Most of the cookies we use are session cookies and are automatically deleted from\_your hard drive after the end of the browser session. In addition, we use permanent\_cookies that remain on your hard drive. During a subsequent visit the browser\_automatically recognizes that you were already with us and also, which inputs and\_settings you prefer. These cookies will be stored on your hard drive and will be\_deleted by itself after the speciﬁed time., key: -3dd172a1"
+            label: Text
+            name: '-3dd172a1'
+            widget: text
+          - hint: "Original text: The cookies used by us are not assigned to any speciﬁc person and therefore not\_assigned to you. When the cookie is activated, an identiﬁcation number is assigned\_to it. An assignment of your personal data to this identiﬁcation number is not\_possible at any time. It does not store your name or similar data that would allow\_the allocation of a cookie to you., key: -61f45a03"
+            label: Text
+            name: '-61f45a03'
+            widget: text
+          - hint: 'Original text: 4. Web Analysis, key: -2a23e1b2'
+            label: Text
+            name: '-2a23e1b2'
+            widget: string
+          - hint: 'Original text: 4.1. Google Analytics, key: -86db6b8'
+            label: Text
+            name: '-86db6b8'
+            widget: string
+          - hint: "Original text: This website uses Google Analytics, a web analytics service provided by Google,\_Inc., 1600 Amphitheater Parkway, Mountain View, CA 94043, USA (\"Google\").\_Google Analytics uses cookies to analyze the user behavior on websites. The\_information generated by cookies about the use of this website is transferred to a\_Google server in the USA and stored there. However, your IP address is shortened\_before the usage statistics are evaluated, so that no conclusions can be drawn\_about your identity. Hereto, Google Analytics was extended on our website with\_the code \"anonymizeIp\" to ensure an anonymous capture of IP addresses., key: 77c6d5d8"
+            label: Text
+            name: 77c6d5d8
+            widget: text
+          - hint: "Original text: Google will use the information obtained by the cookies to evaluate your use of the\_website, to compile reports on the website activity for the website operators and\_to provide further services connected with the use of the website and the Internet.\_Google may also transfer this information to third parties, provided this is required\_by law or if third parties process this data on behalf of Google., key: -321217ae"
+            label: Text
+            name: '-321217ae'
+            widget: text
+          - hint: "Original text: You can conﬁgure your browser to discard cookies, or you can track the data\_generated by the cookie and related to your use of this website (including your IP\_address) to Google, as well as the processing of that data by Google by\_downloading and installing the browser plug-in., key: 7f354cb4"
+            label: Text
+            name: 7f354cb4
+            widget: text
+          - hint: "Original text: As an alternative to the browser add-on or within browsers on mobile devices, you\_can set an opt-out cookie to prevent Google Analytics from being tracked within\_this site in the future. The opt-out cookie only works in the browser and only for\_this domain. If you delete your cookies in this browser, you must click this link\_again., key: 24bd20d9"
+            label: Text
+            name: 24bd20d9
+            widget: text
+          - hint: "Original text: For more information about Google and privacy, see the data protection overview\_and the data protection policy., key: -64230940"
+            label: Text
+            name: '-64230940'
+            widget: text
+          - hint: 'Original text: 4.2. Google Tag Manager, key: 790503ca'
+            label: Text
+            name: 790503ca
+            widget: string
+          - hint: "Original text: To manage our websites and to incorporate cookie-based technologies, we use the\_service Tag manager, which is oﬀered by Google Inc., 1600 Amphitheater Parkway,\_Mountain View, CA 94043, USA (\"Google\"). To do this, each time you access one of\_our websites, your IP address is transferred to a Google server, which could be\_located in the USA. The IP address is not stored by Google as part of the Tag\_manager service and is only used to integrate the technologies that are managed\_by the Tag manager. The Tag manager itself does not set cookies., key: 5b53e95c"
+            label: Text
+            name: 5b53e95c
+            widget: text
+          - hint: 'Original text: 5. Social Media Plugins, key: -54af6908'
+            label: Text
+            name: '-54af6908'
+            widget: string
+          - hint: 'Original text: 5.1, key: ccb8'
+            label: Text
+            name: ccb8
+            widget: string
+          - hint: "Original text: LinkedIn Plugins (“Plugins”) are tools that you may place on your website or\_application (“Application”) which allow users of your Application (“Users”) to\_access and view content on LinkedIn websites. You agree that these Plugins may\_display LinkedIn logos, information available on LinkedIn, search boxes that link to\_information located at LinkedIn.com, advertising for LinkedIn or advertising for\_third party products (“Plugin Content”)., key: 1e5dd2d7"
+            label: Text
+            name: 1e5dd2d7
+            widget: text
+          - hint: 'Original text: 5.2, key: ccb9'
+            label: Text
+            name: ccb9
+            widget: string
+          - hint: "Original text: Plugins include Plugin Content, as well as all software ﬁles or images\_incorporated in, or generated by, the Plugins, and any and all data and html\_embedded code that accompanies the Plugins, and any upgrades, enhancements\_or modiﬁcations to such software and code., key: -6739d8b4"
+            label: Text
+            name: '-6739d8b4'
+            widget: text
+          - hint: 'Original text: 5.3, key: ccba'
+            label: Text
+            name: ccba
+            widget: string
+          - hint: "Original text: You acknowledge and agree that we may use data capture, syndication analysis\_and other similar tools to track, extract, compile, aggregate and analyze any data\_or information resulting from use of a Plugin. If you object to our use of any of the\_foregoing tools, your sole recourse is to stop using the Plugins and remove the\_Plugins from your Application., key: -73e2fe21"
+            label: Text
+            name: '-73e2fe21'
+            widget: text
+          - hint: 'Original text: 6. Google Maps, key: -3d8af14a'
+            label: Text
+            name: '-3d8af14a'
+            widget: string
+          - hint: "Original text: This website uses the Google Maps service from Google Inc., 1600 Amphitheater\_Parkway, Mountain View, CA 94043, USA (\"Google\"). In order for the Google map\_material, which we use, to be included and displayed in your web browser, your\_web browser must be connected to a Google server, which may be in the US, when\_you open the contact page. This gives Google the information that the contact\_page of our website has been opened from the IP address of your device. For more\_information, see the Terms of use of Google Maps., key: 4d0dafda"
+            label: Text
+            name: 4d0dafda
+            widget: text
+          - hint: 'Original text: 7. Data Security, key: -16f60e93'
+            label: Text
+            name: '-16f60e93'
+            widget: string
+          - hint: "Original text: We maintain up-to-date technical measures to ensure data security, in particular to\_protect your personal data from damages through data transfer and knowledge\_leakages to third-parties. These are adapted to the latest state of the art., key: 7ee16d39"
+            label: Text
+            name: 7ee16d39
+            widget: text
+          - hint: 'Original text: 8. Right of Access, key: -cab3261'
+            label: Text
+            name: '-cab3261'
+            widget: string
+          - hint: "Original text: We take the protection of your data very seriously. If you would like information\_about your stored data or further information regarding this privacy statement,\_please send your inquiry by e-mail or by post to the contact details mentioned\_above (see section 1)., key: -283c5a4e"
+            label: Text
+            name: '-283c5a4e'
+            widget: text
+          - hint: >-
+              Original text: 9. Nutzung der SalesViewer®-Technologie:, key:
+              4c686a15
+            label: Text
+            name: 4c686a15
+            widget: string
+          - hint: >-
+              Original text: Auf dieser Webseite werden mit der
+              SalesViewer®-Technologie der SalesViewer® GmbH auf Grundlage
+              berechtigter Interessen des Webseitenbetreibers (Art. 6 Abs.1
+              lit.f DSGVO) Daten zu Marketing-, Marktforschungs- und
+              Optimierungszwecken gesammelt und gespeichert., key: -2e10bcf
+            label: Text
+            name: '-2e10bcf'
+            widget: text
+          - hint: >-
+              Original text: Hierzu wird ein javascript-basierter Code
+              eingesetzt, der zur Erhebung unternehmensbezogener Daten und der
+              entsprechenden Nutzung dient. Die mit dieser Technologie erhobenen
+              Daten werden über eine nicht rückrechenbare Einwegfunktion (sog.
+              Hashing) verschlüsselt. Die Daten werden unmittelbar
+              pseudonymisiert und nicht dazu benutzt, den Besucher dieser
+              Webseite persönlich zu identifizieren., key: -467e9cea
+            label: Text
+            name: '-467e9cea'
+            widget: text
+          - hint: >-
+              Original text: Der Datenerhebung und -speicherung kann jederzeit
+              mit Wirkung für die Zukunft widersprochen werden, indem Sie bitte
+              diesen Link , key: -62b9c790
+            label: Text
+            name: '-62b9c790'
+            widget: text
+          - hint: 'Original text: https://www.salesviewer.com/opt-out, key: -613c24b0'
+            label: Text
+            name: '-613c24b0'
+            widget: string
+          - hint: >-
+              Original text:  anklicken, um die Erfassung durch SalesViewer®
+              innerhalb dieser Webseite zukünftig zu verhindern. Dabei wird ein
+              Opt-out-Cookie für diese Webseite auf Ihrem Gerät abgelegt.
+              Löschen Sie Ihre Cookies in diesem Browser, müssen Sie diesen Link
+              erneut anklicken., key: befe458
+            label: Text
+            name: befe458
+            widget: text
+          - hint: 'Original text: two, key: 1c24c'
+            label: Text
+            name: 1c24c
+            widget: string
+          - hint: 'Original text: Luqom Group, key: 170d8d85'
+            label: Text
+            name: 170d8d85
+            widget: string
+          - hint: 'Original text: Website, key: -53cd8785'
+            label: Text
+            name: '-53cd8785'
+            widget: string
+          - hint: 'Original text: luqom.com, key: 23e8d779'
+            label: Text
+            name: 23e8d779
+            widget: string
+          - hint: 'Original text: Location, key: 752a03d5'
+            label: Text
+            name: 752a03d5
+            widget: string
+          - hint: 'Original text: Berlin, Germany, key: -63b165e3'
+            label: Text
+            name: '-63b165e3'
+            widget: string
+          - hint: >-
+              Original text: LUQOM GROUP is the leading digital platform for
+              lighting fixtures in Europe. Through their online shops as well as
+              their presence in key European marketplaces, they provide more
+              than 500 suppliers with direct access to private and commercial
+              customers across 27 countries. They offer customers more than
+              50,000 products through LUQOM GROUP’s online shops and channels:
+              from entry-level to premium segment online shops, as well as
+              private label brands to renowned design products. LUQOM GROUP
+              targets both consumers (B2C) and professional clients (B2B). All
+              target groups benefit from their strong customer service which is
+              tailored to local needs. B2B customers also value that they
+              support them with professional lighting planning and other
+              consulting services. LUQOM GROUP aims to create the best journey
+              to individually design living spaces with light., key: -4162321a
+            label: Text
+            name: '-4162321a'
+            widget: text
+          - hint: 'Original text: three, key: 693a59e'
+            label: Text
+            name: 693a59e
+            widget: string
+          - hint: 'Original text: Gartenhaus , key: -6bcaed9c'
+            label: Text
+            name: '-6bcaed9c'
+            widget: string
+          - hint: 'Original text: gartenhaus-gmbh.de, key: -7fd52dae'
+            label: Text
+            name: '-7fd52dae'
+            widget: string
+          - hint: 'Original text: Hamburg, Germany, key: -17143b1d'
+            label: Text
+            name: '-17143b1d'
+            widget: string
+          - hint: >-
+              Original text: Gartenhaus is a leading European online platform
+              for home & garden projects and offers garden houses, sheds,
+              carports, terraces, saunas, and other, often bulky, garden and
+              home-related products with garden houses being its core product
+              category., key: 1f094528
+            label: Text
+            name: 1f094528
+            widget: text
+          - hint: 'Original text: four, key: 300d26'
+            label: Text
+            name: 300d26
+            widget: string
+          - hint: 'Original text: Polhus, key: -712d7047'
+            label: Text
+            name: '-712d7047'
+            widget: string
+          - hint: 'Original text: polhus.se, key: -e2e3b39'
+            label: Text
+            name: '-e2e3b39'
+            widget: string
+          - hint: 'Original text: Malmö, Sweden, key: 11590e1'
+            label: Text
+            name: '11590e1'
+            widget: string
+          - hint: >-
+              Original text: Manufacturer of wooden houses in the Nordic region.
+              The company offers self-designed attefallshus, sheds, saunas
+              cabins, playhouses and friggebodar, helping customers to choose
+              luxurious and affordable wooden houses as per their requirements.,
+              key: -2941edee
+            label: Text
+            name: '-2941edee'
+            widget: text
+          - hint: 'Original text: five, key: 2ff6b2'
+            label: Text
+            name: 2ff6b2
+            widget: string
+          - hint: 'Original text: CHRIST GROUP, key: -50ee7ec4'
+            label: Text
+            name: '-50ee7ec4'
+            widget: string
+          - hint: 'Original text: Exited, key: 7c8ae25d'
+            label: Text
+            name: 7c8ae25d
+            widget: string
+          - hint: 'Original text: christ-corporate.com, key: -5d2ea898'
+            label: Text
+            name: '-5d2ea898'
+            widget: string
+          - hint: 'Original text: Hagen, Germany, key: -75211618'
+            label: Text
+            name: '-75211618'
+            widget: string
+          - hint: >-
+              Original text: CHRIST Group is active in the jewellery and watches
+              sector in Europe. It encompasses CHRIST Juweliere und Uhrmacher
+              seit 1863 GmbH, VALMANO GmbH, and CHR Logistik & Service
+              GmbH.CHRIST Group is the market-leading supplier of watches and
+              jewellery in Germany with its three retail brands CHRIST seit
+              1863, VALMANO and BRINCKMANN & LANGE., key: -17f400df
+            label: Text
+            name: '-17f400df'
+            widget: text
+          - hint: 'Original text: six, key: 1bce2'
+            label: Text
+            name: 1bce2
+            widget: string
+          - hint: 'Original text: Osaro, key: 48f01da'
+            label: Text
+            name: 48f01da
+            widget: string
+          - hint: 'Original text: osaro.com, key: -38353073'
+            label: Text
+            name: '-38353073'
+            widget: string
+          - hint: 'Original text: San Francisco, USA, key: 78e4b04f'
+            label: Text
+            name: 78e4b04f
+            widget: string
+          - hint: >-
+              Original text: OSARO, a San Francisco-based company focused on AI
+              for industrial automation. They are building technology for the
+              factories, warehouses, and logistics systems of the 21st century.
+              They were founded to build technology and products that make
+              robots smarter. Not only do they lead their peers in practical
+              revenue-generating applications, they also have released 2
+              products, have deployments on 4 continents, and have relationships
+              with several major global automation suppliers and integrators. As
+              the currently brittle global supply chain is besieged by pandemic,
+              fires, and climate change, e-commerce is exploding and so is the
+              demand for their products. Their customers are investing in smart
+              robotics automation to improve productivity now, to build
+              operational resilience against future shocks, and to create a
+              better and safer workplace for the 21st century., key: -7d40f660
+            label: Text
+            name: '-7d40f660'
+            widget: text
+          - hint: 'Original text: seven, key: 684400d'
+            label: Text
+            name: 684400d
+            widget: string
+          - hint: 'Original text: Robinhood, key: -7de3665a'
+            label: Text
+            name: '-7de3665a'
+            widget: string
+          - hint: 'Original text: robinhood.com, key: 59c29159'
+            label: Text
+            name: 59c29159
+            widget: string
+          - hint: 'Original text: Menlo Park, USA, key: -f9ccc02'
+            label: Text
+            name: '-f9ccc02'
+            widget: string
+          - hint: >-
+              Original text: Robinhood is a stock brokerage that allows
+              customers to buy and sell stocks, options, ETFs, and
+              cryptocurrencies with zero commission. The startup offers equity,
+              cryptocurrency, and options trading, as well as cash management
+              accounts. It also provides a stock brokerage platform that
+              democratizes access to the financial markets and aims to make
+              people comfortable storing money and trading stocks using its
+              application., key: 7d3c691b
+            label: Text
+            name: 7d3c691b
+            widget: text
+          - hint: 'Original text: eight, key: 5c0908f'
+            label: Text
+            name: 5c0908f
+            widget: string
+          - hint: 'Original text: Givve, key: 41a0963'
+            label: Text
+            name: 41a0963
+            widget: string
+          - hint: 'Original text: givve.com, key: 7404ea96'
+            label: Text
+            name: 7404ea96
+            widget: string
+          - hint: 'Original text: München, Germany, key: 435eddf2'
+            label: Text
+            name: 435eddf2
+            widget: string
+          - hint: >-
+              Original text: givve® is a FinTech company offering benefit
+              solutions for employees and business partners. givve® offers
+              innovative tools for employee motivation solutions., key: 51667b64
+            label: Text
+            name: 51667b64
+            widget: text
+          - hint: 'Original text: nine, key: 3398b2'
+            label: Text
+            name: 3398b2
+            widget: string
+          - hint: 'Original text: Palantir Technologies Inc., key: 32ad861b'
+            label: Text
+            name: 32ad861b
+            widget: string
+          - hint: 'Original text: palantir.com, key: 59e7b9a8'
+            label: Text
+            name: 59e7b9a8
+            widget: string
+          - hint: 'Original text: Denver, USA, key: 28c53499'
+            label: Text
+            name: 28c53499
+            widget: string
+          - hint: >-
+              Original text: Palantir Technologies Inc. is a software company
+              that builds enterprise data platforms for use by organizations
+              with complex and sensitive data environments. From building safer
+              cars and planes, to discovering new drugs and combating terrorism,
+              Palantir helps customers across the public, private, and nonprofit
+              sectors transform the way they use their data., key: 7d88bda6
+            label: Text
+            name: 7d88bda6
+            widget: text
+          - hint: 'Original text: eleven, key: -4d84edbf'
+            label: Text
+            name: '-4d84edbf'
+            widget: string
+          - hint: 'Original text: Bloomfarms, key: 420f8efa'
+            label: Text
+            name: 420f8efa
+            widget: string
+          - hint: 'Original text: getbloomfarms.com, key: -1883debd'
+            label: Text
+            name: '-1883debd'
+            widget: string
+          - hint: >-
+              Original text: Bloom Farms is a cannabis company on a mission to
+              bring safe and enjoyable products to consumers who use cannabis as
+              part of a healthy, fulfilling lifestyle. Along the way, they are
+              out to remove the negative social stigmas of cannabis. Sustainably
+              farmed and responsibly made, their products are beautifully
+              designed around the mantra: relaxation, relief, creativity and
+              fun. Bloom Farms grows cannabis in California by responsible
+              family farmers who care about the land, the environment and the
+              patients in need of their products., key: -11a912b8
+            label: Text
+            name: '-11a912b8'
+            widget: text
+          - hint: 'Original text: twelve, key: -33515d67'
+            label: Text
+            name: '-33515d67'
+            widget: string
+          - hint: 'Original text: AM GmbH, key: -c40f0e0'
+            label: Text
+            name: '-c40f0e0'
+            widget: string
+          - hint: 'Original text: am-gmbh.de, key: -43cea9e'
+            label: Text
+            name: '-43cea9e'
+            widget: string
+          - hint: 'Original text: Meschede, Germany, key: 47306e19'
+            label: Text
+            name: '47306e19'
+            widget: string
+          - hint: >-
+              Original text: For AM GmbH, IT is an ongoing process: IT design
+              and development, sustainable, efficient operation of all solutions
+              with personal 24/7 support, right up to ready-to-use applications
+              from the cloud. AM GmbH is independent of the operating model,
+              because its own cloud architects orchestrate IT operations for
+              customers in their own high-class data centers, in the global
+              clouds and on-premises. For over 10 years, AM GmbH has been
+              looking after satisfied medium-sized and corporate customers from
+              all over Germany from its three locations in Meschede, Dortmund
+              and Hamburg with over 100 committed employees., key: 60b93226
+            label: Text
+            name: 60b93226
+            widget: text
+          - hint: 'Original text: thirteen, key: 4939faf7'
+            label: Text
+            name: 4939faf7
+            widget: string
+          - hint: 'Original text: Cantourage, key: 7c4ac1f7'
+            label: Text
+            name: 7c4ac1f7
+            widget: string
+          - hint: 'Original text: cantourage.com, key: 306a8cea'
+            label: Text
+            name: 306a8cea
+            widget: string
+          - hint: >-
+              Original text: The Cantourage GmbH is a Berlin-based cannabis
+              company that has already established itself as one of the leading
+              European companies in the medical cannabis sector. Founded in
+              2019, the company enables producers from across the world to bring
+              their product into the European market more quickly and cheaply,
+              without having to deal with complex and lengthy regulatory
+              processes. Cantourage is run by industry experts and pioneers of
+              the European medical cannabis sector. Cantourage offers products
+              in all relevant market segments: dried flowers, extracts and
+              Dronabinol. Through its platform, Cantourage helps non-EU
+              producers to tackle the complexity of adhering to EU-GMP
+              guidelines, by easing market access and offering a completely new
+              and enhanced way of distributing their products. Cantourage offers
+              services and support to its platform partners from product imports
+              and transformation to warehousing and logistics to Sales and
+              Marketing., key: -4a082a10
+            label: Text
+            name: '-4a082a10'
+            widget: text
+          - hint: 'Original text: fifteen, key: -3343eaa3'
+            label: Text
+            name: '-3343eaa3'
+            widget: string
+          - hint: 'Original text: KitchenAdvisor , key: 7110a804'
+            label: Text
+            name: 7110a804
+            widget: string
+          - hint: 'Original text: kitchenadvisor.de, key: df0dc13'
+            label: Text
+            name: df0dc13
+            widget: string
+          - hint: >-
+              Original text: KitchenAdvisor is a referral platform for kitchens.
+              They connect the customer with the perfect kitchen studio. They
+              support the whole thing with 2 algorithms: The Price Predictor,
+              which is able to give the customer a price for the kitchen within
+              10 minutes, and the Store Matcher, which uses machine learning to
+              find the best studios in the region., key: 378913b3
+            label: Text
+            name: 378913b3
+            widget: text
+          - hint: 'Original text: sixteen, key: 7d6abebc'
+            label: Text
+            name: 7d6abebc
+            widget: string
+          - hint: 'Original text: Mondosano, key: f1bdd86'
+            label: Text
+            name: f1bdd86
+            widget: string
+          - hint: 'Original text: mondosano.de, key: 31ed51c9'
+            label: Text
+            name: 31ed51c9
+            widget: string
+          - hint: >-
+              Original text: Mondosano is a patient-centric digital recruitment
+              provider based in Hamburg, Germany. Mondosano is specialized in
+              data-driven patient recruitment, as well as patient engagement and
+              patients insight campaigns., key: 7d4b15ab
+            label: Text
+            name: 7d4b15ab
+            widget: text
+          - hint: 'Original text: seventeen, key: -54ae4b99'
+            label: Text
+            name: '-54ae4b99'
+            widget: string
+          - hint: 'Original text: Art 19, key: 7566b125'
+            label: Text
+            name: 7566b125
+            widget: string
+          - hint: 'Original text: art-19.com, key: 4ba52765'
+            label: Text
+            name: 4ba52765
+            widget: string
+          - hint: 'Original text: Münster, Germany, key: 5908caf2'
+            label: Text
+            name: 5908caf2
+            widget: string
+          - hint: >-
+              Original text: Art 19 is a company created to raise money for
+              human rights causes from the sale of artworks by the world’s
+              leading contemporary artists. The name “Art 19” is an abbreviation
+              of Article 19 of the Universal Declaration of Human Rights, which
+              provides: “Everyone has the right to freedom of opinion and
+              expression”. Art 19 is an initiative founded by managers with
+              lifetimes of experience in the worlds of art and human rights.,
+              key: 519cdbb6
+            label: Text
+            name: 519cdbb6
+            widget: text
+          - hint: 'Original text: eighteen, key: 63f7f8df'
+            label: Text
+            name: 63f7f8df
+            widget: string
+          - hint: 'Original text: Staages, key: -de412ac'
+            label: Text
+            name: '-de412ac'
+            widget: string
+          - hint: 'Original text: staages.com, key: 19a9e607'
+            label: Text
+            name: 19a9e607
+            widget: string
+          - hint: >-
+              Original text: Staages is a music company which believes in the
+              highest standards and greatest traditions of first-class music
+              production. Through their expertise and strategic service
+              resources, STAAGES has access to the whole spectrum of music
+              production. From the creation of the first song notes to
+              international touring, they pass by mastered recording,
+              professional publishing, artist management, album launching and
+              video production., key: 4eea67ba
+            label: Text
+            name: 4eea67ba
+            widget: text
+          - hint: 'Original text: nineteen, key: 16aa328c'
+            label: Text
+            name: 16aa328c
+            widget: string
+          - hint: 'Original text: Rademacher, key: -603b158a'
+            label: Text
+            name: '-603b158a'
+            widget: string
+          - hint: 'Original text: rademacher.de, key: 54b20319'
+            label: Text
+            name: 54b20319
+            widget: string
+          - hint: 'Original text: Rhede, Germany, key: -57befff1'
+            label: Text
+            name: '-57befff1'
+            widget: string
+          - hint: >-
+              Original text: Rademacher is a leading manufacturer of proprietary
+              smart home systems. With Rademacher products, shutters, blinds,
+              awnings, lights, and other electrical devices can be operated from
+              anywhere in the world via the internet using a smartphone or
+              tablet computer. In addition to its HomePilot home automation
+              systems, the company's product range includes innovative belt
+              winders, tubular motors, control mechanisms, actuators, and garage
+              door openers. Radermacher products meet its customers' needs
+              thanks to their excellent design and high level of functionality.
+              They are also quick and easy to install., key: -38632658
+            label: Text
+            name: '-38632658'
+            widget: text
+          - hint: 'Original text: twenty, key: -3351560f'
+            label: Text
+            name: '-3351560f'
+            widget: string
+          - hint: 'Original text: Dornbracht AG, key: -4b31e1bf'
+            label: Text
+            name: '-4b31e1bf'
+            widget: string
+          - hint: 'Original text: dornbracht.com, key: 20b5bfd8'
+            label: Text
+            name: 20b5bfd8
+            widget: string
+          - hint: 'Original text: Iserlohn, Germany, key: -62599221'
+            label: Text
+            name: '-62599221'
+            widget: string
+          - hint: >-
+              Original text: Dornbracht is a leading specialist for superior
+              designer fittings and accessories for bathrooms, spas and
+              kitchens. The company, with headquarter in Iserlohn, Germany, was
+              founded in 1950 and today is internationally active with its
+              product portfolio in more than 125 markets. As a premium brand,
+              Dornbracht stands for innovative technology and high-quality
+              standards at manufactory level, "Made in Germany" with highly
+              qualified employees and state-of-the-art production technologies.,
+              key: -4db93b68
+            label: Text
+            name: '-4db93b68'
+            widget: text
+          - hint: 'Original text: twentytwo, key: 19d406bb'
+            label: Text
+            name: 19d406bb
+            widget: string
+          - hint: 'Original text: IFASEC GmbH, key: 4af528ff'
+            label: Text
+            name: 4af528ff
+            widget: string
+          - hint: 'Original text: ifasec.de, key: 9002b22'
+            label: Text
+            name: 9002b22
+            widget: string
+          - hint: 'Original text: Dortmund, Germany, key: -18e7bb0c'
+            label: Text
+            name: '-18e7bb0c'
+            widget: string
+          - hint: >-
+              Original text: IFASEC is an IT security company that develops
+              security softwares and performs automated penetration testing of
+              web pages and provides services in the static and dynamic
+              code-analysis of software and apps. IFASEC provides security teams
+              with end-to-end solutions to tackle modern threats., key:
+              -193d604b
+            label: Text
+            name: '-193d604b'
+            widget: text
+          - hint: 'Original text: twentythree, key: -b1975b3'
+            label: Text
+            name: '-b1975b3'
+            widget: string
+          - hint: 'Original text: Life BioSciences, key: -64b3476d'
+            label: Text
+            name: '-64b3476d'
+            widget: string
+          - hint: 'Original text: lifebiosciences.com, key: 7fa4682e'
+            label: Text
+            name: 7fa4682e
+            widget: string
+          - hint: 'Original text: Boston, USA, key: -5667065e'
+            label: Text
+            name: '-5667065e'
+            widget: string
+          - hint: >-
+              Original text: Founded in 2017 and headquartered in Boston, MA,
+              Life Biosciences is pursuing therapies targeting three molecular
+              pathways that regulate the biology of aging: mitochondrial
+              uncoupling, chaperone-mediated autophagy, and epigenetic
+              reprogramming. Their platform approach enables them to develop
+              pharmaceutical treatments with the potential to prevent, treat,
+              and/or reverse multiple aging-related diseases, each with critical
+              unmet needs., key: -3e0c9d8f
+            label: Text
+            name: '-3e0c9d8f'
+            widget: text
+          - hint: 'Original text: twentyfour, key: 20a65697'
+            label: Text
+            name: 20a65697
+            widget: string
+          - hint: 'Original text: Roadsurfer GmbH, key: -51c278d7'
+            label: Text
+            name: '-51c278d7'
+            widget: string
+          - hint: 'Original text: roadsurfer.com, key: -63ca6c8a'
+            label: Text
+            name: '-63ca6c8a'
+            widget: string
+          - hint: >-
+              Original text: Roadsurfer is a leading platform for outdoor
+              travel. On the rental side, Roadsurfer is characterized by a
+              first-class service and thus logically also by a high level of
+              customer satisfaction. Roadsurfer rents out Bullis, as the newer
+              VW buses are now blasphemously called, so campers, just a “real”
+              motor home. Most use such vehicles, which are built for the road
+              rather than for self-sufficient life, for short trips. Roadsurfer
+              has increased the demand for such buses to become Europe's largest
+              campervan rental company - in just a few years., key: 7f3f21b0
+            label: Text
+            name: 7f3f21b0
+            widget: text
+          - hint: 'Original text: twentyfive, key: 20a64023'
+            label: Text
+            name: 20a64023
+            widget: string
+          - hint: 'Original text: Formlogic, key: -1bfaa306'
+            label: Text
+            name: '-1bfaa306'
+            widget: string
+          - hint: 'Original text: formlogic.com, key: 48318aad'
+            label: Text
+            name: 48318aad
+            widget: string
+          - hint: 'Original text: Seattle, Washington, USA, key: -2d2c9bdd'
+            label: Text
+            name: '-2d2c9bdd'
+            widget: string
+          - hint: >-
+              Original text: Formlogic is reinventing Precision Part
+              Manufacturing. Formlogic’s autonomous manufacturing technology
+              uses machine learning and physics simulation to provide fast
+              delivery of precision parts., key: -7e094b1f
+            label: Text
+            name: '-7e094b1f'
+            widget: text
+          - hint: 'Original text: twentysix, key: 19d40151'
+            label: Text
+            name: 19d40151
+            widget: string
+          - hint: 'Original text: SmithRx, key: -195c9e77'
+            label: Text
+            name: '-195c9e77'
+            widget: string
+          - hint: 'Original text: smithrx.com, key: edd4b9c'
+            label: Text
+            name: edd4b9c
+            widget: string
+          - hint: >-
+              Original text: SmithRx is the next-generation pharmacy benefit
+              partner built on a modern technology platform that creates new
+              levels of flexibility, efficiency, and customer satisfaction. It’s
+              a new path forward that aligns incentives and harnesses data
+              analytics to deliver an exceptional pharmacy benefit product. A
+              San Francisco based technology company, SmithRx was founded in
+              2016 to create a cost-competitive PBM that offers clients a proven
+              pass-through model, a single technology platform, concierge level
+              service, and strong drug cost, rebate, and service level
+              guarantees., key: 6b7f2be9
+            label: Text
+            name: 6b7f2be9
+            widget: text
+          - hint: 'Original text: twentyseven, key: -b28db44'
+            label: Text
+            name: '-b28db44'
+            widget: string
+          - hint: 'Original text: Freeform, key: -57ce8eb0'
+            label: Text
+            name: '-57ce8eb0'
+            widget: string
+          - hint: 'Original text: freeformfuture.com, key: b85b006'
+            label: Text
+            name: b85b006
+            widget: string
+          - hint: 'Original text: Los Angeles, CA, key: 244170b1'
+            label: Text
+            name: 244170b1
+            widget: string
+          - hint: "Original text: Freeform is a cutting-edge metal 3D printing company founded by accomplished leaders and engineers from SpaceX. \_Freeform deploys software-defined, autonomous metal 3D printing factories around the world, bringing on-demand production to mainstream industries at any scale. Its advanced printing technology and manufacturing-as-a-service model eliminate historical production barriers by enabling manufacturers in any industry to quickly go from idea to volume production. The Freeform team consists of leaders and engineers from the world's most innovative companies., key: -2b58d846"
+            label: Text
+            name: '-2b58d846'
+            widget: text
+          - hint: 'Original text: Halo Industries, key: 57000160'
+            label: Text
+            name: '57000160'
+            widget: string
+          - hint: 'Original text: halo-industries.com, key: 6ba08d40'
+            label: Text
+            name: 6ba08d40
+            widget: string
+          - hint: 'Original text: Palo Alto, USA, key: 7cd5a55d'
+            label: Text
+            name: 7cd5a55d
+            widget: string
+          - hint: >-
+              Original text: World class innovators are creating novel
+              laser-based hardware systems for materials fabrication that help
+              manufacturers drastically reduce waste, improve quality, and
+              enable next generation technologies., key: -2139cd70
+            label: Text
+            name: '-2139cd70'
+            widget: text
+          - hint: 'Original text: AnyMove, key: 30f7ebbd'
+            label: Text
+            name: 30f7ebbd
+            widget: string
+          - hint: 'Original text: anymove.app, key: 70441c70'
+            label: Text
+            name: 70441c70
+            widget: string
+          - hint: >-
+              Original text: AnyMove is the platform for P2P (person-to-person)
+              car sharing. At AnyMove, as a car owner, you can easily and
+              securely rent a car to other private individuals. During the
+              rental period, the car is covered by your insurance partner. As a
+              tenant, AnyMove gives you access to a large number of different
+              cars from private individuals. The keys are handed over between
+              the car owner and the tenant digitally via the AnyMove app., key:
+              -7f02c5f5
+            label: Text
+            name: '-7f02c5f5'
+            widget: text
+          - hint: 'Original text: Carbon Health, key: 325e046f'
+            label: Text
+            name: 325e046f
+            widget: string
+          - hint: 'Original text: carbonhealth.com, key: -4f3147e4'
+            label: Text
+            name: '-4f3147e4'
+            widget: string
+          - hint: "Original text: Carbon Health is a modern, tech-enabled healthcare company transforming the primary care, urgent care, and virtual care experience. With a team of expert physicians, engineers, and designers, Carbon Health pushes the boundaries of medicine to deliver personal, accessible, and high-quality care. Carbon health aims to give patients connection to their medical records, quick access for immediate and ongoing healthcare needs, and a network of healthcare experts. Carbon health wants patients to feel as though they have an advocate - like a doctor in their family. \_With a growing network of trusted clinics, and an end-to-end platform that supports ongoing care management and virtual appointments, Carbon Health ensures world-class care is affordable and always in reach., key: 55444e91"
+            label: Text
+            name: '55444e91'
+            widget: text
+          - hint: 'Original text: FoundersLane, key: 408112d0'
+            label: Text
+            name: 408112d0
+            widget: string
+          - hint: 'Original text: founderslane.com, key: 4f92ed23'
+            label: Text
+            name: 4f92ed23
+            widget: string
+          - hint: >-
+              Original text: The company FoundersLane builds digital business
+              models together with established corporations. Behind this is a
+              mixture of digital strategy consulting, company builder and
+              private equity. Under the name FoundersLane, more than 100 tech
+              entrepreneurs and tech experts who are familiar with founding,
+              building, and scaling business models come together. FoundersLane
+              blends entrepreneurial flair with corporate assets to create and
+              grow strategically significant digital ventures, even in regulated
+              sectors like healthcare., key: e001608
+            label: Text
+            name: e001608
+            widget: text
+          - hint: 'Original text: Unioncrate, key: 1e56d274'
+            label: Text
+            name: 1e56d274
+            widget: string
+          - hint: 'Original text: unioncrate.com, key: -2b2fe919'
+            label: Text
+            name: '-2b2fe919'
+            widget: string
+          - hint: 'Original text: New York, USA, key: 52854e40'
+            label: Text
+            name: '52854e40'
+            widget: string
+          - hint: >-
+              Original text: Unioncrate is an integrated business planning
+              platform that unites artificial and human intelligence so CPG
+              brands can plan, execute, and pivot supply chain strategies at the
+              click of a button. Unioncrate unifies supply chain, financial, and
+              operational data, eliminating blind spots from forecasts and
+              slashing hours out of the demand planning process - creating a
+              digital brain for business., key: -4896cd82
+            label: Text
+            name: '-4896cd82'
+            widget: text
+          - hint: 'Original text: Deel, key: 207108'
+            label: Text
+            name: '207108'
+            widget: string
+          - hint: 'Original text: letsdeel.com, key: 6e5e1d33'
+            label: Text
+            name: 6e5e1d33
+            widget: string
+          - hint: >-
+              Original text: Deel is a developer of a payroll platform used to
+              re-imagine payouts for businesses working with remote contractors.
+              The platform is used by remote teams that connect localized
+              compliance and automates payments in one system of record, as well
+              as provides contracts and templates to be used for tax forms and
+              localized contracts, automated payment,invoicing and receipts, and
+              customer support. It aims to offer to every company that hires
+              remote talents a one-stop-shop that makes onboarding, global
+              compliance, and payments easier., key: 1ef8676d
+            label: Text
+            name: 1ef8676d
+            widget: text
+          - hint: 'Original text: Outdoor Toys, key: -38bc3b47'
+            label: Text
+            name: '-38bc3b47'
+            widget: string
+          - hint: 'Original text: outdoortoys.co.uk, key: 3e021bfb'
+            label: Text
+            name: 3e021bfb
+            widget: string
+          - hint: 'Original text: Mid Wales, UK, key: 5b410202'
+            label: Text
+            name: 5b410202
+            widget: string
+          - hint: >-
+              Original text: Founded in 2006 and based in Mid Wales, Outdoor
+              Toys is among the largest outdoor garden toys specialists in the
+              UK. The company offers over 1,000 products and specialises in
+              Modular Toys, including swing sets, slides and climbing frames, as
+              well as ride-on toys, trampolines, sandpits and accessories. The
+              company operates a vertically integrated value chain with its own
+              product design, UK manufacturing, customer service, dedicated
+              logistics fleet and direct online sales to customers through its
+              own website as well as online marketplaces., key: -4dd84829
+            label: Text
+            name: '-4dd84829'
+            widget: text
+          - hint: 'Original text: HEAVN, key: 416f89c'
+            label: Text
+            name: 416f89c
+            widget: string
+          - hint: 'Original text: heavn-lights.com, key: b556fe1'
+            label: Text
+            name: b556fe1
+            widget: string
+          - hint: >-
+              Original text: Heavn is a leading pioneer company with
+              groundbreaking signature products with propietary technology in
+              the field of Human Centric Lighting, a dynamic lighting concept to
+              enhance health and performance., key: -6ad99ee5
+            label: Text
+            name: '-6ad99ee5'
+            widget: text
+          - hint: 'Original text: KLAVIYO, key: 4dfd809'
+            label: Text
+            name: 4dfd809
+            widget: string
+          - hint: 'Original text: klaviyo.com, key: -1e9985c4'
+            label: Text
+            name: '-1e9985c4'
+            widget: string
+          - hint: >-
+              Original text: Greater Boston Area, east Coast, New England, USA,
+              key: -4f8b5305
+            label: Text
+            name: '-4f8b5305'
+            widget: string
+          - hint: >-
+              Original text: Klaviyo is a leading customer data and marketing
+              automation platform dedicated to accelerating revenue and customer
+              connection for online businesses. Klaviyo makes it easy to store,
+              access, analyze and use transactional and behavioral data to power
+              highly-targeted customer and prospect communications. The
+              company's hybrid customer-data and marketing-platform model allows
+              companies to grow by fostering direct relationships with
+              customers, without giving up their valuable data to popular
+              big-tech ad platforms. Over 275,000 innovative companies like
+              Unilever, Custom Ink, Living Proof and Huckberry sell more with
+              Klaviyo., key: 4b4f4a8f
+            label: Text
+            name: 4b4f4a8f
+            widget: text
+          - hint: 'Original text: Gordian, key: 6fb9dedc'
+            label: Text
+            name: 6fb9dedc
+            widget: string
+          - hint: 'Original text: gordian.bio, key: -339c30ea'
+            label: Text
+            name: '-339c30ea'
+            widget: string
+          - hint: 'Original text: San Francisco, California, USA, key: 75006883'
+            label: Text
+            name: '75006883'
+            widget: string
+          - hint: >-
+              Original text: Gordian Biotechnology is a therapeutics company
+              focused on diseases of aging, the major unmet medical need of our
+              generation. Age-related diseases have complex causes that include
+              interactions with the aged environment, and traditional ex vivo
+              screening methods have failed to produce effective treatments.To
+              address this problem, Gordian’s platform combines gene therapy
+              with single-cell sequencing to test hundreds of therapies in
+              individual animals, the only model that captures the full
+              complexity of age-related disease.We thus scale in vivo efficacy
+              testing to cover every therapeutic target at the very beginning of
+              the drug discovery process. This lets us choose targets that
+              really impact disease biology, to develop and commercialize
+              therapies for the world’s deadliest diseases, and eventually for
+              the processes of aging itself., key: 753a9a9f
+            label: Text
+            name: 753a9a9f
+            widget: text
+          - hint: 'Original text: ABOUT YOU, key: 563590cc'
+            label: Text
+            name: 563590cc
+            widget: string
+          - hint: 'Original text: aboutyou.com, key: 6fc64b05'
+            label: Text
+            name: 6fc64b05
+            widget: string
+          - hint: >-
+              Original text: ABOUT YOU digitises the classic shopping stroll by
+              creating an inspiring and personalised shopping experience on the
+              smartphone. At ABOUT YOU, the focus is on the customers, who are
+              supported in expressing themselves individually through fashion.
+              On the website aboutyou.com and the multi-award winning ABOUT YOU
+              app, customers find versatile inspiration and more than 400,000
+              items from over 2,000 brands. ABOUT YOU is one of the largest
+              fashion and lifestyle platforms in Europe., key: 564afd81
+            label: Text
+            name: 564afd81
+            widget: text
+          - hint: 'Original text: NOIBU, key: 4702cfb'
+            label: Text
+            name: 4702cfb
+            widget: string
+          - hint: 'Original text: noibu.com, key: 203a8a2e'
+            label: Text
+            name: 203a8a2e
+            widget: string
+          - hint: 'Original text: Ottawa, Ontario, Canada, key: -8e14fa2'
+            label: Text
+            name: '-8e14fa2'
+            widget: string
+          - hint: >-
+              Original text: Serving enterprise customers globally, Noibu is the
+              industry leader in eCommerce error monitoring and lost revenue
+              prevention. Noibu's software platform monitors your eCommerce site
+              and flags and prioritizes errors that prevent real customers from
+              checking out, while collecting all the information required to
+              quickly resolve them., key: -6af2e092
+            label: Text
+            name: '-6af2e092'
+            widget: text
+          - hint: 'Original text: Lockerverse, key: -76a1e303'
+            label: Text
+            name: '-76a1e303'
+            widget: string
+          - hint: 'Original text: lockerverse.com, key: 7e610930'
+            label: Text
+            name: '7e610930'
+            widget: string
+          - hint: 'Original text: Delaware, USA, key: 49b091fc'
+            label: Text
+            name: 49b091fc
+            widget: string
+          - hint: >-
+              Original text: Lockerverse is a non-fungible token (NFT) community
+              platform that tells ‘culture-defining stories’. The Lockerverse
+              platform empowers iconic and emerging athletes, entertainers,
+              artists, designers, and brands to tell culture-defining stories.
+              Lockerverse also provides fans unique access, digital and IRL
+              experiences, content, and community., key: -2603f451
+            label: Text
+            name: '-2603f451'
+            widget: text
+          - hint: 'Original text: REBELLE, key: 6b3ff14f'
+            label: Text
+            name: 6b3ff14f
+            widget: string
+          - hint: 'Original text: rebelle.de, key: -56d756a0'
+            label: Text
+            name: '-56d756a0'
+            widget: string
+          - hint: >-
+              Original text: REBELLE is the leading German online marketplace
+              for designer second-hand fashion and offers fashion and
+              accessories from the luxury and high-end sectors. Sellers can list
+              and sell their used designer items. With the concierge service,
+              Rebelle also offers sellers an all-inclusive service and takes
+              over the entire sales process: from the creation of professional
+              text and image material to packaging and shipping., key: -2395e2d9
+            label: Text
+            name: '-2395e2d9'
+            widget: text
+          - hint: 'Original text: Ydeon, key: 51529f9'
+            label: Text
+            name: 51529f9
+            widget: string
+          - hint: 'Original text: ydeon.com, key: 4ab1d02c'
+            label: Text
+            name: 4ab1d02c
+            widget: string
+          - hint: >-
+              Original text: The YDEON Group, headquartered in Hamburg, combines
+              the companies GartenHaus GmbH, Polhus and OutdoorToys under one
+              roof. With over 20 online stores in Germany, Austria, Switzerland,
+              Belgium, the Netherlands, Denmark, France, Great Britain, Norway,
+              Sweden and Finland, among others, it is Europe’s leading digital
+              platform for all garden projects., key: -659c9aa3
+            label: Text
+            name: '-659c9aa3'
+            widget: text
+          - hint: 'Original text: Quilt, key: 4ac36ed'
+            label: Text
+            name: 4ac36ed
+            widget: string
+          - hint: 'Original text: quilt.com, key: 5d514320'
+            label: Text
+            name: 5d514320
+            widget: string
+          - hint: 'Original text: Redwood City, CA, key: 574fdc1f'
+            label: Text
+            name: 574fdc1f
+            widget: string
+          - hint: >-
+              Original text: Founded in Redwood City, CA, Quilt builds home heat
+              pump systems for a better climate. Its mission is to move humanity
+              off fossil fuel heating. Quilt’s integrated hardware and software
+              system offers stylish design and enables room-by-room control for
+              maximum comfort and efficiency. Quilt makes it easy to upgrade
+              from traditional heating systems through its technology-enabled,
+              direct-to-homeowner purchase-and-installation experience., key:
+              -4b0f2531
+            label: Text
+            name: '-4b0f2531'
+            widget: text
+          - hint: 'Original text: Numeral, key: -14034e02'
+            label: Text
+            name: '-14034e02'
+            widget: string
+          - hint: 'Original text: numeralhq.com, key: 328a56ba'
+            label: Text
+            name: 328a56ba
+            widget: string
+          - hint: 'Original text: San Francisco, CA, USA, key: 436672bd'
+            label: Text
+            name: 436672bd
+            widget: string
+          - hint: >-
+              Original text: Numeral automates all aspects of sales tax which
+              simplifies the sales tax process., key: 3f24ffc2
+            label: Text
+            name: 3f24ffc2
+            widget: string
+          - hint: 'Original text: Enter, key: 40016b8'
+            label: Text
+            name: 40016b8
+            widget: string
+          - hint: 'Original text: enter.de, key: -7d85dca9'
+            label: Text
+            name: '-7d85dca9'
+            widget: string
+          - hint: >-
+              Original text: Enter helps millions of people to decarbonise their
+              homes by providing the easiest end-to-end solution of one-stop
+              energy audits, procurement, financing, and energy monitoring. With
+              Enter clients have all the data of their home in one app., key:
+              11731a3b
+            label: Text
+            name: 11731a3b
+            widget: text
+          - hint: 'Original text: Medmo, key: 46c804e'
+            label: Text
+            name: 46c804e
+            widget: string
+          - hint: 'Original text: medmo.com, key: -78e40bff'
+            label: Text
+            name: '-78e40bff'
+            widget: string
+          - hint: 'Original text: New York, NY, USA, key: 6d8d8ae1'
+            label: Text
+            name: 6d8d8ae1
+            widget: string
+          - hint: >-
+              Original text: Medmo is a healthcare platform that gives uninsured
+              and underinsured consumers the freedom to obtain medical imaging
+              services at a price they can afford, without hidden fees or
+              confusion, from accredited healthcare providers in their area.,
+              key: 77e12519
+            label: Text
+            name: '77e12519'
+            widget: text
+          - hint: 'Original text: b, key: 62'
+            label: Text
+            name: '62'
+            widget: string
+          - hint: 'Original text: city, country, key: 3dfd697'
+            label: Text
+            name: 3dfd697
+            widget: string
+          - hint: 'Original text: a, key: 61'
+            label: Text
+            name: '61'
+            widget: string
+          - hint: 'Original text: c, key: 63'
+            label: Text
+            name: '63'
+            widget: string
+          - hint: 'Original text: d, key: 64'
+            label: Text
+            name: '64'
+            widget: string
+          - hint: 'Original text: e, key: 65'
+            label: Text
+            name: '65'
+            widget: string
+          - hint: 'Original text: f, key: 66'
+            label: Text
+            name: '66'
+            widget: string
+          - hint: 'Original text: h, key: 68'
+            label: Text
+            name: '68'
+            widget: string
+          - hint: 'Original text: g, key: 67'
+            label: Text
+            name: '67'
+            widget: string
+          - hint: >-
+              Original text: Thank you! Your submission has been received!, key:
+              5a0ea5a1
+            label: Text
+            name: 5a0ea5a1
+            widget: string
+          - hint: >-
+              Original text: Oops! Something went wrong while submitting the
+              form., key: -7c112e99
+            label: Text
+            name: '-7c112e99'
+            widget: string
+          - hint: 'Original text: Selected portfolio companies, key: 44b4881e'
+            label: Text
+            name: 44b4881e
+            widget: string
+          - hint: 'Original text: Klaviyo, key: 3d4ce409'
+            label: Text
+            name: 3d4ce409
+            widget: string
+          - hint: 'Original text: Greater Boston Area, USA, key: 6eb29bf5'
+            label: Text
+            name: 6eb29bf5
+            widget: string
+          - hint: 'Original text: 私たちについて, key: -1342c62'
+            label: Text
+            name: '-1342c62'
+            widget: string
+          - hint: 'Original text: ポートフォリオ, key: 32da5add'
+            label: Text
+            name: 32da5add
+            widget: string
+          - hint: 'Original text: 連絡先, key: 22c936a'
+            label: Text
+            name: 22c936a
+            widget: string
+          - hint: 'Original text: EN, key: 8a9'
+            label: Text
+            name: 8a9
+            widget: string
+          - hint: >-
+              Original text: W
+              Venturesは、ベルリンとドイツを拠点とするベンチャーキャピタルで、主要なB2BおよびB2C分野の国際的な大手企業に対して、デジタルビジネスのアイデアを加速させるための完全なフレームワークを提供しています。W
+              Venturesは、業界、技術、戦略的なプライベート・エクイティやVCパートナーとともに、オペレーショナル・ベンチャー、テクノロジー・プロバイダー、イノベーション・ハブとして活動しています。私たちは、ベンチャー企業に投資し、シードからグロースまでサポートします。,
+              key: 4e7cac15
+            label: Text
+            name: 4e7cac15
+            widget: text
+          - hint: 'Original text: 産業別セグメント, key: 3b8f586'
+            label: Text
+            name: 3b8f586
+            widget: string
+          - hint: >-
+              Original text:
+              エネルギー、インダストリアル、コマース、セキュリティ、デジタルヘルス、モビリティ、ファイナンス、IT、不動産・建設、ビジネスソフトウェア、フィンテック、インシュアテック、マニュファクチャリング＆インダストリー4.0、マーケティング、メディア、モビリティ＆ロジスティックス。,
+              key: -11b5d03d
+            label: Text
+            name: '-11b5d03d'
+            widget: text
+          - hint: >-
+              Original text:
+              シードからグロースまでのベンチャーキャピタル、戦略コンサルティング、アイディエーション、モデルの検証、プロトタイピング、ビジネス開発とプロジェクト管理。,
+              key: dcce9f9
+            label: Text
+            name: dcce9f9
+            widget: string
+          - hint: 'Original text: 戦略的パートナー, key: -4577f136'
+            label: Text
+            name: '-4577f136'
+            widget: string
+          - hint: >-
+              Original text:
+              海外の大手ベンチャー企業やプライベート・エクイティ・パートナー、ファミリー・オフィス、大手テクノロジー・パートナーとの戦略的パートナーシップ。,
+              key: 3d3c1ac5
+            label: Text
+            name: 3d3c1ac5
+            widget: string
+          - hint: 'Original text: 本社, key: cf792'
+            label: Text
+            name: cf792
+            widget: string
+          - hint: 'Original text: ドイツ・ベルリン＆ドルトムント, key: -1a63c278'
+            label: Text
+            name: '-1a63c278'
+            widget: string
+          - hint: 'Original text: スペシャルティ, key: -7872fe65'
+            label: Text
+            name: '-7872fe65'
+            widget: string
+          - hint: >-
+              Original text:
+              インターネット、Eコマース、エンタープライズIT、ベンチャーキャピタル、シードファンディング、ビジネスインテリジェンス、デジタルトランスフォーメーション、パフォーマンスマーケティング、B2B、B2C、コークリエーション、製品開発、投資、ファミリーOﬃce、プライベートエクイティ、コンサルティング、スタートアップ、建設など。,
+              key: -7ee0c6a3
+            label: Text
+            name: '-7ee0c6a3'
+            widget: text
+          - hint: 'Original text: 設立年, key: 215eff6'
+            label: Text
+            name: 215eff6
+            widget: string
+          - hint: >-
+              Original text: W ventures は、米国、欧州、アジア・日本を中心に、以下の分野で指導・支援を行っています。,
+              key: -11efceaa
+            label: Text
+            name: '-11efceaa'
+            widget: string
+          - hint: 'Original text: 事業内容, key: 254a1e96'
+            label: Text
+            name: 254a1e96
+            widget: string
+          - hint: 'Original text: 経営管理、コンサルタント業務, key: -66175828'
+            label: Text
+            name: '-66175828'
+            widget: string
+          - hint: 'Original text: 事業開発・マーケティング, key: -7051c9bd'
+            label: Text
+            name: '-7051c9bd'
+            widget: string
+          - hint: 'Original text: データ分析, key: -399dd9ec'
+            label: Text
+            name: '-399dd9ec'
+            widget: string
+          - hint: 'Original text: ファイナンス, key: 1834a5b8'
+            label: Text
+            name: 1834a5b8
+            widget: string
+          - hint: 'Original text: スタートアップや新興企業への財務コンサルティング, key: 45c2ab42'
+            label: Text
+            name: 45c2ab42
+            widget: string
+          - hint: 'Original text: 投資コンサルティング, key: 1c3168c2'
+            label: Text
+            name: 1c3168c2
+            widget: string
+          - hint: 'Original text: ベンチャーキャピタルの融資およびファンドマネジメント, key: -6081101a'
+            label: Text
+            name: '-6081101a'
+            widget: string
+          - hint: 'Original text: コーチング, key: -3abbe0ab'
+            label: Text
+            name: '-3abbe0ab'
+            widget: string
+          - hint: 'Original text: 財務・経済・経営コーチング, key: -68a1a191'
+            label: Text
+            name: '-68a1a191'
+            widget: string
+          - hint: 'Original text: GERMANY, key: 26405793'
+            label: Text
+            name: '26405793'
+            widget: string
+          - hint: 'Original text: LinkedInプロフィール, key: 313c9111'
+            label: Text
+            name: 313c9111
+            widget: string
+          - hint: 'Original text: プライバシーポリシー, key: -750c1b2b'
+            label: Text
+            name: '-750c1b2b'
+            widget: string
+          - hint: 'Original text: プリント, key: 16f14868'
+            label: Text
+            name: 16f14868
+            widget: string
+          - hint: >-
+              Original text: W Venturesは投資家として、ドイツスタートアップ連邦協会のメンバーである, key:
+              2be896d0
+            label: Text
+            name: 2be896d0
+            widget: string
+          - hint: >-
+              Original text:
+              私たちは、スタートアップ企業の資金調達条件を改善するために、共に取り組んでいます。これは、経済・金融政策の枠組みの近代化を意味する一方で、経験やノウハウを交換するための関連ネットワークを意味しています。,
+              key: -20098f08
+            label: Text
+            name: '-20098f08'
+            widget: text
+          - hint: >-
+              Original text: © 2024 W Ventures GmbH. すべての権利は留保されています。, key:
+              -541aa60d
+            label: Text
+            name: '-541aa60d'
+            widget: string
+          - hint: 'Original text: W Ventures GmbHが米国特許商標庁に登録, key: -5e26c881'
+            label: Text
+            name: '-5e26c881'
+            widget: string
+          - hint: 'Original text: ウェブデザイン・開発 y , key: -507a090'
+            label: Text
+            name: '-507a090'
+            widget: string
+          - hint: 'Original text: データ保護 W Ventures GmbH, key: 20cc4c47'
+            label: Text
+            name: 20cc4c47
+            widget: string
+          - hint: >-
+              Original text:
+              以下では、当社のウェブサイトにおける個人情報の収集、処理、利用についてお知らせします。個人情報を慎重に取り扱うことは、当社にとって非常に重要な問題です。お客様の個人データを処理する際、当社は法的要件を遵守し、お客様のプライバシーを保護します。,
+              key: 3d6b2f7e
+            label: Text
+            name: 3d6b2f7e
+            widget: text
+          - hint: >-
+              Original text:
+              このドキュメントは、ブラウザの通常の機能を使って印刷または保存することができます（通常は「ファイルとして保存」）。また、ここをクリックすると、このファイルをダウンロードしてアーカイブすることができます。PDFドキュメントを開くには、無償で提供されているAdobe
+              Reader www.adobe.de、またはPDFフォーマットを開くことができる同様のプログラムが必要です。, key:
+              -69a0847e
+            label: Text
+            name: '-69a0847e'
+            widget: text
+          - hint: 'Original text: 1. 担当者と反論の可能性, key: 39124fc8'
+            label: Text
+            name: 39124fc8
+            widget: string
+          - hint: >-
+              Original text:
+              連邦データ保護法に基づくお客様の個人データの収集、処理、利用のための連絡先担当者、いわゆる責任者、およびテレメディア法におけるサービス提供者は以下の通りです。,
+              key: 5392ae34
+            label: Text
+            name: 5392ae34
+            widget: string
+          - hint: >-
+              Original text:
+              お客様のデータ全体の収集、処理、使用、または本データ保護方針に従った個別の措置に対して異議を唱えたい場合は、上記の連絡先データに電子メール、ファックス、または手紙でご連絡ください。,
+              key: 52c7d9db
+            label: Text
+            name: 52c7d9db
+            widget: string
+          - hint: 'Original text: 2. 個人情報の収集、処理、利用について, key: -475d815f'
+            label: Text
+            name: '-475d815f'
+            widget: string
+          - hint: >-
+              Original text:
+              お客様が当社のウェブサイトをご利用になる場合、または当社のウェブサイトと相互作用する場合（例えば、お問い合わせフォームに記入して送信するなど）、当社は個人データを収集、処理、使用します。,
+              key: fe93e81
+            label: Text
+            name: fe93e81
+            widget: text
+          - hint: 'Original text: 2.1. 個人情報, key: 35bd3ac2'
+            label: Text
+            name: 35bd3ac2
+            widget: string
+          - hint: >-
+              Original text:
+              個人データとは、特定のまたは特定可能な自然人の客観的または個人的なアフォーダンスに関するデータを指します。これには、特に、氏名、電話番号、住所、電子メールアドレスなど、お客様の身元に関する結論を得ることができる情報が含まれます。例えば、お客様が当社のウェブサイトを訪問した際に当社が収集する統計データで、お客様の個人情報と直接関連付けることができないものは、個人情報の概念には含まれません。,
+              key: -5888bed0
+            label: Text
+            name: '-5888bed0'
+            widget: text
+          - hint: 'Original text: 2.2. 情報としての利用, key: 7981510a'
+            label: Text
+            name: 7981510a
+            widget: string
+          - hint: >-
+              Original text:
+              ウェブサイトを単なる情報として利用する場合には、お客様がウェブサイトを閲覧するためにお客様のブラウザから送信されるデータを除き、いかなる個人データも収集しません。これらは,
+              key: 3ad94b38
+            label: Text
+            name: 3ad94b38
+            widget: string
+          - hint: 'Original text: IPアドレス, key: -682e2e65'
+            label: Text
+            name: '-682e2e65'
+            widget: string
+          - hint: 'Original text: 依頼を受けた日時, key: -1efb5051'
+            label: Text
+            name: '-1efb5051'
+            widget: string
+          - hint: 'Original text: グリニッジ標準時（GMT）を基準としたタイムゾーンの調整, key: -59109f1d'
+            label: Text
+            name: '-59109f1d'
+            widget: string
+          - hint: 'Original text: リクエストの内容（具体的なページ）, key: 73959c8d'
+            label: Text
+            name: 73959c8d
+            widget: string
+          - hint: 'Original text: アクセス状況／HTTPステータスコード, key: 1ff83978'
+            label: Text
+            name: 1ff83978
+            widget: string
+          - hint: 'Original text: 転送されたデータの量, key: -676b321e'
+            label: Text
+            name: '-676b321e'
+            widget: string
+          - hint: 'Original text: リクエスト元のウェブサイト, key: -2bd2483f'
+            label: Text
+            name: '-2bd2483f'
+            widget: string
+          - hint: 'Original text: ブラウザ, key: 16f0c6e3'
+            label: Text
+            name: 16f0c6e3
+            widget: string
+          - hint: 'Original text: オペレーティングシステムとその表面, key: 475870dd'
+            label: Text
+            name: 475870dd
+            widget: string
+          - hint: 'Original text: ブラウザの言語とバージョン, key: 31117399'
+            label: Text
+            name: '31117399'
+            widget: string
+          - hint: >-
+              Original text:
+              利用者のIPアドレスは、利用終了後に削除または匿名化されます。匿名化の場合、IPアドレスは、個人的または客観的な失態に関する個々の詳細が、特定のまたは特定の自然人に割り当てられなくなるか、または不釣り合いな量の時間、コスト、労働力を要するだけになるように変更されます。いわゆるログファイルのデータは、Wベンチャーズのウェブサイトをさらに改善し、より使いやすくするために、また、エラーをより迅速に発見し修正するために、当社によって匿名で評価されます。また、必要に応じて対応するデータ量を提供できるように、サーバーの容量を管理するためにも使用されます。,
+              key: -75b597ba
+            label: Text
+            name: '-75b597ba'
+            widget: text
+          - hint: 'Original text: 2.3. データの第三者への開示, key: 32ee04e0'
+            label: Text
+            name: 32ee04e0
+            widget: string
+          - hint: >-
+              Original text: W
+              Venturesが収集したデータの第三者への転送は、契約処理や決済のために必要な場合、またはお客様が事前に同意した場合にのみ行われます。このようにして提供されたデータは、当社のサービスプロバイダーがその業務を遂行するためにのみ使用されます。これらの業者は、当社が慎重に選定し、書面で委託したものです。これらの業者は、当社の指示に拘束され、当社が定期的にチェックします。それ以外の目的で情報を使用することは許可されておらず、当社のサービスプロバイダーも同様にそれを行うことはありません。,
+              key: 5a24210
+            label: Text
+            name: 5a24210
+            widget: text
+          - hint: 'Original text: 3. クッキー, key: -f01d678'
+            label: Text
+            name: '-f01d678'
+            widget: string
+          - hint: >-
+              Original text:
+              クッキーとは、お客様のデータキャリアに保存される小さなファイルで、お客様のブラウザを介して当社のシステムと交換するための特定の設定やデータを保存します。クッキーは、お客様のコンピュータにプログラムを実行したり、ウイルスを送信したりすることはできません。これらは、インターネットのOﬀerをより使いやすく、より効果的にすることを目的としています。,
+              key: -760b7cd8
+            label: Text
+            name: '-760b7cd8'
+            widget: text
+          - hint: >-
+              Original text:
+              基本的には、ブラウザを閉じるとすぐに削除される（＝セッションの終了）、いわゆるセッションクッキーと、データキャリアに長期間または無制限に保存される一時的/永続的クッキーの2つの異なるタイプのクッキーが存在します。この保存は、当社のウェブサイトをデザインするのに役立ち、また、特定の入力項目を保存することで、お客様が常に繰り返し入力する必要がないようにすることで、お客様の利用を容易にします。,
+              key: -48fad328
+            label: Text
+            name: '-48fad328'
+            widget: text
+          - hint: >-
+              Original text:
+              お客様は、いつでもブラウザのセキュリティ設定でクッキーを削除し、必要に応じてブラウザの設定を変更することができます（例えば、サードパーティのクッキーを受け入れるか、すべてのクッキーを拒否するかなど）。原則として、ウェブブラウザのメニューバーには、新しいクッキーを拒否したり、すでに受け取ったクッキーを削除したりする方法が表示されます。ただし、当サイトのすべての機能がご利用いただけない場合がありますので、あらかじめご了承ください。,
+              key: 41ed4cc0
+            label: Text
+            name: 41ed4cc0
+            widget: text
+          - hint: 'Original text: 3.1. Wベンチャーズのクッキーについて, key: 270e6bc3'
+            label: Text
+            name: 270e6bc3
+            widget: string
+          - hint: >-
+              Original text:
+              当社が使用するほとんどのクッキーはセッションクッキーであり、ブラウザのセッションが終了するとお客様のハードドライブから自動的に削除されます。また、お客様のハードドライブに残るパーマネントクッキーも使用しています。次回の訪問時には、お客様がすでに当社を利用していたことや、お客様がどの入力や設定を好まれたかをブラウザが自動的に認識します。これらのクッキーは、お客様のハードドライブに保存され、指定された時間が経過すると自ら削除されます。,
+              key: -56e26ce6
+            label: Text
+            name: '-56e26ce6'
+            widget: text
+          - hint: >-
+              Original text:
+              当社が使用するクッキーは、特定の人に割り当てられていないため、お客様に割り当てられることはありません。クッキーが有効になると、そのクッキーには識別番号が割り当てられます。この識別番号へのお客様の個人データの割り当ては、いつでも可能ではありません。また、クッキーをお客様に割り当てることができるような、お客様のお名前や同様のデータは保存されません。,
+              key: 542bf395
+            label: Text
+            name: 542bf395
+            widget: text
+          - hint: 'Original text: 4. ウェブ解析, key: -69d79424'
+            label: Text
+            name: '-69d79424'
+            widget: string
+          - hint: "Original text: このウェブサイトは、Google, Inc., 1600 Amphitheater Parkway, Mountain View, CA 94043, USA（以下、「Google」）が提供するウェブ解析サービスであるGoogle Analyticsを使用しています。\_Google Analyticsは、Cookieを使用してウェブサイト上のユーザーの行動を分析します。本ウェブサイトの利用に関してCookieが生成した情報は、米国のGoogleのサーバーに転送され、そこで保存されます。ただし、利用統計が評価される前にお客様のIPアドレスが短縮されるため、お客様の身元に関して結論が導き出されることはありません。このため、Google Analyticsは、IPアドレスを匿名で取得するためのコード \"anonymizeIp \"を使用して、当社のウェブサイトに拡張されています。, key: -2157ebd6"
+            label: Text
+            name: '-2157ebd6'
+            widget: text
+          - hint: "Original text: グーグルは、クッキーによって得られた情報を、お客様のウェブサイトの利用状況の評価、ウェブサイト運営者のためのウェブサイト活動に関するレポートの作成、ウェブサイトおよびインターネットの利用に関連したさらなるサービスの提供のために使用します。\_また、Googleは、法律で義務付けられている場合や、第三者がGoogleに代わってこのデータを処理する場合には、この情報を第三者に転送することがあります。, key: 78a211db"
+            label: Text
+            name: 78a211db
+            widget: text
+          - hint: >-
+              Original text:
+              お客様は、ブラウザを設定してクッキーを破棄することもできますし、ブラウザのプラグインをダウンロードしてインストールすることにより、クッキーによって生成された、お客様の本ウェブサイトの利用に関連するデータ（お客様のIPアドレスを含む）をGoogleに追跡したり、そのデータをGoogleが処理したりすることもできます。,
+              key: -4e3789d4
+            label: Text
+            name: '-4e3789d4'
+            widget: text
+          - hint: >-
+              Original text:
+              ブラウザのアドオンやモバイル端末のブラウザ内での代替として、オプトアウトクッキーを設定することで、今後このサイト内でのGoogle
+              Analyticsのトラッキングを防ぐことができます。オプトアウトクッキーは、ブラウザの中でのみ、このドメインに対してのみ機能します。このブラウザでクッキーを削除した場合は、再度このリンクをクリックする必要があります。,
+              key: 6749c12e
+            label: Text
+            name: 6749c12e
+            widget: text
+          - hint: >-
+              Original text: Googleとプライバシーに関する詳しい情報は、データ保護の概要とデータ保護方針をご覧ください。,
+              key: -48ba1b7
+            label: Text
+            name: '-48ba1b7'
+            widget: string
+          - hint: >-
+              Original text: 当社のウェブサイトを管理し、クッキーベースの技術を組み込むために、Google Inc.（1600
+              Amphitheater Parkway, Mountain View, CA 94043, USA）が提供するサービスTag
+              managerを使用しています（以下、「Google」）。これを行うために、お客様が当社のウェブサイトのいずれかにアクセスするたびに、お客様のIPアドレスが、米国内に設置されている可能性のあるGoogleのサーバーに転送されます。IPアドレスは、タグマネージャーサービスの一環としてGoogleに保存されることはなく、タグマネージャーが管理する技術を統合するためにのみ使用されます。タグマネージャー自体はクッキーを設定しません。,
+              key: 32360934
+            label: Text
+            name: '32360934'
+            widget: text
+          - hint: 'Original text: 5. ソーシャルメディア用プラグイン, key: -304e481d'
+            label: Text
+            name: '-304e481d'
+            widget: string
+          - hint: >-
+              Original text:
+              LinkedInプラグイン（以下「プラグイン」といいます）は、お客様がご自身のウェブサイトまたはアプリケーション（以下「アプリケーション」といいます）に配置することができるツールであり、お客様のアプリケーションのユーザー（以下「ユーザー」といいます）がLinkedInウェブサイト上のコンテンツにアクセスし、閲覧することを可能にします。お客様は、これらのプラグインがLinkedInのロゴ、LinkedInで利用可能な情報、LinkedIn.comにある情報にリンクする検索ボックス、LinkedInの広告または第三者の製品の広告（「プラグインのコンテンツ」）を表示することに同意します。,
+              key: -10962873
+            label: Text
+            name: '-10962873'
+            widget: text
+          - hint: >-
+              Original text:
+              お客様は、当社がデータキャプチャ、シンジケーション分析、およびその他の類似のツールを使用して、プラグインの使用に起因するデータまたは情報を追跡、抽出、コンパイル、集計、および分析することを認め、これに同意するものとします。お客様が上記のツールの使用に異議を唱える場合、お客様の唯一の手段は、プラグインの使用を中止し、お客様のアプリケーションからプラグインを削除することです。,
+              key: -4eb605e6
+            label: Text
+            name: '-4eb605e6'
+            widget: text
+          - hint: >-
+              Original text: 本ウェブサイトでは、Google Inc., 1600 Amphitheater Parkway,
+              Mountain View, CA 94043,
+              USA（以下、「Google」）のGoogleマップサービスを使用しています。当社が使用しているGoogleマップの素材をお客様のウェブブラウザに含めて表示するためには、お客様がお問い合わせページを開いたときに、お客様のウェブブラウザが米国内にあるGoogleのサーバーに接続されている必要があります。これにより、Googleは、お客様の端末のIPアドレスから、当社ウェブサイトのお問い合わせページが開かれたという情報を得ることができます。詳しくは、Googleマップの利用規約をご覧ください。,
+              key: 5f50ac61
+            label: Text
+            name: 5f50ac61
+            widget: text
+          - hint: 'Original text: 7. データセキュリティ, key: 11056315'
+            label: Text
+            name: '11056315'
+            widget: string
+          - hint: >-
+              Original text:
+              当社は、データセキュリティを確保するための最新の技術的手段を維持しており、特に、データ転送や第三者への知識の漏洩による損害からお客様の個人データを保護しています。これらは、最新の技術水準に適合しています。,
+              key: 3c52c95a
+            label: Text
+            name: 3c52c95a
+            widget: text
+          - hint: 'Original text: 8. アクセス権について, key: -411480d1'
+            label: Text
+            name: '-411480d1'
+            widget: string
+          - hint: >-
+              Original text:
+              当社は、お客様のデータの保護を非常に重視しています。保存されているデータに関する情報や、このプライバシー・ステートメントに関する詳しい情報をご希望の場合は、上記の連絡先（第1項参照）まで、電子メールまたは郵送でお問い合わせください。,
+              key: -4ca453c1
+            label: Text
+            name: '-4ca453c1'
+            widget: text
+          - hint: 'Original text: 9. SalesViewer®テクノロジーの使用, key: 63ef2e50'
+            label: Text
+            name: 63ef2e50
+            widget: string
+          - hint: >-
+              Original text: このウェブサイトでは、ウェブサイト運営者の正当な利益に基づき、SalesViewer®
+              GmbHのSalesViewer®テクノロジーを使用して、マーケティング、市場調査、最適化の目的でデータが収集および保存されます(DSGVO第6条para.1
+              lit.f)。この目的のために、javascriptベースのコードを使用して、企業関連のデータを収集し、対応する使用を行っています。この技術で収集されたデータは、非可逆的な一方通行の関数（いわゆるハッシュ化）によって暗号化されます。データの収集および保存は、このリンク
+              https://www.salesviewer.com/opt-out
+              をクリックして、今後のSalesViewer®による本ウェブサイト内での収集を防ぐことにより、いつでも将来に向けて有効に異議を唱えることができます。これにより、お客様の端末に本ウェブサイトのオプトアウト・クッキーが置かれます。このブラウザでクッキーを削除した場合は、再度このリンクをクリックする必要があります。www.DeepL.com/Translator（無料版）で翻訳しました。,
+              key: -330ff677
+            label: Text
+            name: '-330ff677'
+            widget: text
+          - hint: 'Original text: § 5 TMGに基づく情報, key: 8f3b1cf'
+            label: Text
+            name: 8f3b1cf
+            widget: string
+          - hint: 'Original text: オペレーターと連絡先, key: 47cfc29f'
+            label: Text
+            name: 47cfc29f
+            widget: string
+          - hint: 'Original text: 商業登記への登録, key: -1aa9a4f'
+            label: Text
+            name: '-1aa9a4f'
+            widget: string
+          - hint: 'Original text: 登録裁判所：地方裁判所ハーゲン登録番号：HRB 9658, key: -74ca1830'
+            label: Text
+            name: '-74ca1830'
+            widget: string
+          - hint: 'Original text: 表現, key: 10f896'
+            label: Text
+            name: 10f896
+            widget: string
+          - hint: >-
+              Original text: W Ventures GmbHは、Jochen M. Wilmsが代表を務めています。, key:
+              365552c7
+            label: Text
+            name: 365552c7
+            widget: string
+          - hint: 'Original text: 責任, key: 1157cf'
+            label: Text
+            name: 1157cf
+            widget: string
+          - hint: >-
+              Original text: § 55 II RstVW Ventures
+              GmbHに基づくジャーナリスティック・エディトリアル・コンテンツの責任者, key: -2c474937
+            label: Text
+            name: '-2c474937'
+            widget: string
+          - hint: 'Original text: この刻印は、以下のソーシャルメディアのページにも適用されます。, key: -3cf8ddad'
+            label: Text
+            name: '-3cf8ddad'
+            widget: string
+          - hint: 'Original text: ODR規則第14条(1)に基づくオンライン紛争解決, key: 5c96b722'
+            label: Text
+            name: 5c96b722
+            widget: string
+          - hint: >-
+              Original text:
+              欧州委員会は、オンライン紛争解決のためのプラットフォーム（OS）を提供しています。このプラットフォームは、Deutsche
+              Anwaltshotline
+              AGのジェネレーターを介して作成された本ウェブサイトのhttp://ec.europa.eu/consumers/odr/.Imprint
+              に掲載されています。, key: 2a27dc72
+            label: Text
+            name: 2a27dc72
+            widget: text
+          - hint: 'Original text: 免責事項, key: 270f3c19'
+            label: Text
+            name: 270f3c19
+            widget: string
+          - hint: 'Original text: コンテンツに対する責任, key: 6aecbbab'
+            label: Text
+            name: 6aecbbab
+            widget: string
+          - hint: "Original text: 当サイトのコンテンツは細心の注意を払って作成されていますが、その正確性、完全性、最新性については一切の責任を負いません。サービス提供者である当社は、ドイツテレメディア法（TMG）第7条（1）に基づく一般的な法律に従い、本ページ上の独自のコンテンツに責任を負います。 ただし、TMG第8条から第10条に基づき、サービス提供者である当社は、送信または保存された第三者の情報を監視する義務や、違法行為を示す状況を調査する義務を負いません。\_一般的な法律に従って情報を削除したり、使用を遮断したりする義務は、この影響を受けません。しかし、この点に関する責任は、具体的な侵害を知った時からしか発生しません。そのような侵害に気付いた場合、私たちは直ちにこのコンテンツを削除します。, key: -823b228"
+            label: Text
+            name: '-823b228'
+            widget: text
+          - hint: 'Original text: リンクに関する責任, key: 7592e5be'
+            label: Text
+            name: 7592e5be
+            widget: string
+          - hint: "Original text: 当社の提供する商品には、第三者の外部ウェブサイトへのリンクが含まれていますが、その内容について当社は影響力を持ちません。したがって、当社はこれらの外部コンテンツについて一切の責任を負いません。リンク先のページの内容については、そのページの提供者または運営者が常に責任を負うものとします。リンク先のページは、リンクする時点で法令違反の可能性がないか確認しています。\_違法なコンテンツはリンク時には認識できませんでした。しかし、リンク先のページのコンテンツを恒常的に監視することは、法的違反の具体的な兆候がない限り合理的ではありません。法律に違反する行為を発見した場合、当社は直ちにそのようなリンクを削除します。, key: -65f4892c"
+            label: Text
+            name: '-65f4892c'
+            widget: text
+          - hint: 'Original text: 著作権について, key: b5de29f'
+            label: Text
+            name: b5de29f
+            widget: string
+          - hint: >-
+              Original text:
+              本ページに掲載されているサイト運営者が作成したコンテンツおよび著作物は、ドイツの著作権法の対象となります。複製、加工、配布、その他著作権法上認められた範囲を超えて利用する場合には、各著作者の書面による同意が必要です。本サイトのダウンロードおよびコピーは、個人的な非営利目的の使用に限り許可されます。当サイトのコンテンツは、運営者が作成したものではない限り、第三者の著作権を尊重しています。特に、第三者のコンテンツはそのように表示されます。それにもかかわらず、著作権侵害に気づかれた場合は、適宜ご連絡ください。侵害行為を発見した場合、当社は直ちに当該コンテンツを削除します。,
+              key: -3c6fd92e
+            label: Text
+            name: '-3c6fd92e'
+            widget: text
+          - hint: 'Original text: 主な投資先企業, key: -5cf6746d'
+            label: Text
+            name: '-5cf6746d'
+            widget: string
+          - hint: 'Original text: Let''s talk,, key: -683917f9'
+            label: Text
+            name: '-683917f9'
+            widget: string
+          - hint: 'Original text: Full Name *, key: -1c9d4d7a'
+            label: Text
+            name: '-1c9d4d7a'
+            widget: string
+          - hint: 'Original text: Phone (optional), key: -56aae44d'
+            label: Text
+            name: '-56aae44d'
+            widget: string
+          - hint: 'Original text: E-Mail *, key: -2ae91957'
+            label: Text
+            name: '-2ae91957'
+            widget: string
+          - hint: 'Original text: Message *, key: 219d3e31'
+            label: Text
+            name: 219d3e31
+            widget: string
+          - hint: 'Original text: Thank you !, key: 4343178a'
+            label: Text
+            name: 4343178a
+            widget: string
+          - hint: 'Original text: Oops! Something went wrong., key: 5e8b37c5'
+            label: Text
+            name: 5e8b37c5
+            widget: string
+          - hint: 'Original text: By clicking , key: 6ffc699d'
+            label: Text
+            name: 6ffc699d
+            widget: string
+          - hint: 'Original text: “Accept”, key: -60bb93a7'
+            label: Text
+            name: '-60bb93a7'
+            widget: string
+          - hint: >-
+              Original text: , you agree to the storing of all cookies on your
+              device to enhance site navigation, analyze site usage, and assist
+              in our marketing efforts. View our , key: -3874b7a3
+            label: Text
+            name: '-3874b7a3'
+            widget: text
+          - hint: 'Original text: Privacy Policy, key: -3fbde6f6'
+            label: Text
+            name: '-3fbde6f6'
+            widget: string
+          - hint: 'Original text:  for more information., key: -466d844a'
+            label: Text
+            name: '-466d844a'
+            widget: string
+          - hint: 'Original text: Preferences, key: -25fb7928'
+            label: Text
+            name: '-25fb7928'
+            widget: string
+          - hint: 'Original text: Deny, key: 20722c'
+            label: Text
+            name: 20722c
+            widget: string
+          - hint: 'Original text: Accept, key: 748ca128'
+            label: Text
+            name: 748ca128
+            widget: string
+          - hint: 'Original text: Privacy Preference Center, key: -292e837e'
+            label: Text
+            name: '-292e837e'
+            widget: string
+          - hint: >-
+              Original text: When you visit websites, they may store or retrieve
+              data in your browser. This storage is often necessary for the
+              basic functionality of the website. The storage may be used for
+              marketing, analytics, and personalization of the site, such as
+              storing your preferences. Privacy is important to us, so you have
+              the option of disabling certain types of storage that may not be
+              necessary for the basic functioning of the website. Blocking
+              categories may impact your experience on the website., key:
+              6b30dde0
+            label: Text
+            name: 6b30dde0
+            widget: text
+          - hint: 'Original text: Reject all cookies, key: 41778c2f'
+            label: Text
+            name: 41778c2f
+            widget: string
+          - hint: 'Original text: Allow all cookies, key: -7313ef67'
+            label: Text
+            name: '-7313ef67'
+            widget: string
+          - hint: >-
+              Original text: Manage Consent Preferences by Category, key:
+              2bfb2cbe
+            label: Text
+            name: 2bfb2cbe
+            widget: string
+          - hint: 'Original text: Essential, key: 16a3932e'
+            label: Text
+            name: 16a3932e
+            widget: string
+          - hint: 'Original text: Always Active, key: 6434d237'
+            label: Text
+            name: 6434d237
+            widget: string
+          - hint: >-
+              Original text: These items are required to enable basic website
+              functionality., key: -3ecddb96
+            label: Text
+            name: '-3ecddb96'
+            widget: string
+          - hint: 'Original text: Marketing, key: 3fc9ea06'
+            label: Text
+            name: 3fc9ea06
+            widget: string
+          - hint: >-
+              Original text: These items are used to deliver advertising that is
+              more relevant to you and your interests. They may also be used to
+              limit the number of times you see an advertisement and measure the
+              effectiveness of advertising campaigns. Advertising networks
+              usually place them with the website operator’s permission., key:
+              6994ab7
+            label: Text
+            name: 6994ab7
+            widget: text
+          - hint: 'Original text: Personalization, key: -13f831fc'
+            label: Text
+            name: '-13f831fc'
+            widget: string
+          - hint: >-
+              Original text: These items allow the website to remember choices
+              you make (such as your user name, language, or the region you are
+              in) and provide enhanced, more personal features. For example, a
+              website may provide you with local weather reports or traffic news
+              by storing data about your current location., key: -3d6925b8
+            label: Text
+            name: '-3d6925b8'
+            widget: text
+          - hint: 'Original text: Analytics, key: 1288bb66'
+            label: Text
+            name: 1288bb66
+            widget: string
+          - hint: >-
+              Original text: These items help the website operator understand
+              how its website performs, how visitors interact with the site, and
+              whether there may be technical issues. This storage type usually
+              doesn’t collect information that identifies a visitor., key:
+              398471b1
+            label: Text
+            name: 398471b1
+            widget: text
+          - hint: 'Original text: Confirm my preferences and close, key: -717776ad'
+            label: Text
+            name: '-717776ad'
+            widget: string
+      - label: Links
+        name: links
+        file: cms/_data/links.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Links
+          - hint: 'Original link: #about, key: 413ec14a'
+            label: Link
+            name: 413ec14a
+            widget: string
+          - hint: 'Original link: /en/portfolio/, key: 4e7f193e'
+            label: Link
+            name: 4e7f193e
+            widget: string
+          - hint: 'Original link: #contact, key: 6c80469d'
+            label: Link
+            name: 6c80469d
+            widget: string
+          - hint: 'Original link: /jp/home/, key: -4957b1aa'
+            label: Link
+            name: '-4957b1aa'
+            widget: string
+          - hint: 'Original link: /, key: 2f'
+            label: Link
+            name: 2f
+            widget: string
+          - hint: >-
+              Original link: mailto:info@wventures.de?subject=Contact, key:
+              -7f2d4a6e
+            label: Link
+            name: '-7f2d4a6e'
+            widget: string
+          - hint: >-
+              Original link: mailto:Info@wventures.de ?subject=Hello, key:
+              5003fb80
+            label: Link
+            name: 5003fb80
+            widget: string
+          - hint: 'Original link: http://www.wventures.de, key: 6fcc6f21'
+            label: Link
+            name: 6fcc6f21
+            widget: string
+          - hint: >-
+              Original link: https://www.linkedin.com/company/11273519/, key:
+              -220c9eaa
+            label: Link
+            name: '-220c9eaa'
+            widget: string
+          - hint: 'Original link: /en/privacy-policy/, key: -36bfb6ff'
+            label: Link
+            name: '-36bfb6ff'
+            widget: string
+          - hint: 'Original link: /en/imprint/, key: 3ef0245d'
+            label: Link
+            name: 3ef0245d
+            widget: string
+          - hint: 'Original link: https://www.anthonysalamin.ch/, key: 64a1e758'
+            label: Link
+            name: 64a1e758
+            widget: string
+          - hint: >-
+              Original link:
+              https://www.google.ch/maps/place/W+Ventures+GmbH/@52.50865,13.3192813,17z/data=!3m1!4b1!4m5!3m4!1s0x47a850e2a2825047:0x7e890e8544e069b3!8m2!3d52.50865!4d13.32147,
+              key: 1b30fd06
+            label: Link
+            name: 1b30fd06
+            widget: string
+          - hint: 'Original link: https://www.wventures.de/#about, key: -1ff46965'
+            label: Link
+            name: '-1ff46965'
+            widget: string
+          - hint: 'Original link: https://www.wventures.de/#contact, key: -7492f452'
+            label: Link
+            name: '-7492f452'
+            widget: string
+          - hint: 'Original link: /jp/imprint/, key: ffa8460'
+            label: Link
+            name: ffa8460
+            widget: string
+          - hint: 'Original link: /jp/privacy-policy/, key: 416d6f9e'
+            label: Link
+            name: 416d6f9e
+            widget: string
+          - hint: 'Original link: mailto:info@wventures.de, key: 44b84962'
+            label: Link
+            name: 44b84962
+            widget: string
+          - hint: 'Original link: https://www.salesviewer.com/opt-out, key: -613c24b0'
+            label: Link
+            name: '-613c24b0'
+            widget: string
+          - hint: 'Original link: https://www.luqom.com/, key: 5376e91c'
+            label: Link
+            name: 5376e91c
+            widget: string
+          - hint: 'Original link: https://www.gartenhaus-gmbh.de, key: 5fc4fd98'
+            label: Link
+            name: 5fc4fd98
+            widget: string
+          - hint: 'Original link: http://www.polhus.se, key: 393ad85e'
+            label: Link
+            name: 393ad85e
+            widget: string
+          - hint: 'Original link: https://www.christ-corporate.com/en/, key: 9206845'
+            label: Link
+            name: '9206845'
+            widget: string
+          - hint: 'Original link: http://www.osaro.com, key: f33e324'
+            label: Link
+            name: f33e324
+            widget: string
+          - hint: 'Original link: http://www.robinhood.com, key: -2745fe90'
+            label: Link
+            name: '-2745fe90'
+            widget: string
+          - hint: 'Original link: https://givve.com/en/, key: 4eb4333e'
+            label: Link
+            name: 4eb4333e
+            widget: string
+          - hint: 'Original link: http://www.palantir.com, key: 76c66ab1'
+            label: Link
+            name: 76c66ab1
+            widget: string
+          - hint: 'Original link: https://getbloomfarms.com, key: 413c8e54'
+            label: Link
+            name: 413c8e54
+            widget: string
+          - hint: 'Original link: https://www.am-gmbh.de, key: -9f81958'
+            label: Link
+            name: '-9f81958'
+            widget: string
+          - hint: 'Original link: https://cantourage.com, key: -6fd5e87'
+            label: Link
+            name: '-6fd5e87'
+            widget: string
+          - hint: 'Original link: https://www.kitchenadvisor.de/en/, key: -76e8b85c'
+            label: Link
+            name: '-76e8b85c'
+            widget: string
+          - hint: 'Original link: http://www.mondosano.de, key: 4ecc02d2'
+            label: Link
+            name: 4ecc02d2
+            widget: string
+          - hint: 'Original link: http://www.art-19.com, key: -ea17952'
+            label: Link
+            name: '-ea17952'
+            widget: string
+          - hint: 'Original link: http://www.staages.com, key: 2b1c6fde'
+            label: Link
+            name: 2b1c6fde
+            widget: string
+          - hint: 'Original link: http://www.rademacher.de, key: -2c568cd0'
+            label: Link
+            name: '-2c568cd0'
+            widget: string
+          - hint: 'Original link: https://www.dornbracht.com/gb, key: 6cd1226c'
+            label: Link
+            name: 6cd1226c
+            widget: string
+          - hint: 'Original link: http://www.ifasec.de, key: 50693eb9'
+            label: Link
+            name: 50693eb9
+            widget: string
+          - hint: 'Original link: http://www.lifebiosciences.com, key: 23f72b05'
+            label: Link
+            name: 23f72b05
+            widget: string
+          - hint: 'Original link: https://roadsurfer.com/en/, key: 7617039c'
+            label: Link
+            name: 7617039c
+            widget: string
+          - hint: 'Original link: https://www.formlogic.com/, key: 7b4e8968'
+            label: Link
+            name: 7b4e8968
+            widget: string
+          - hint: 'Original link: http://www.smithrx.com, key: 204fd573'
+            label: Link
+            name: 204fd573
+            widget: string
+          - hint: 'Original link: http://www.freeformfuture.com, key: -6b0c49b1'
+            label: Link
+            name: '-6b0c49b1'
+            widget: string
+          - hint: 'Original link: http://halo-industries.com, key: 94cb5ee'
+            label: Link
+            name: 94cb5ee
+            widget: string
+          - hint: 'Original link: https://www.anymove.app/, key: 14950985'
+            label: Link
+            name: '14950985'
+            widget: string
+          - hint: 'Original link: https://carbonhealth.com, key: -4c4c1b15'
+            label: Link
+            name: '-4c4c1b15'
+            widget: string
+          - hint: 'Original link: https://founderslane.com/, key: -374db83'
+            label: Link
+            name: '-374db83'
+            widget: string
+          - hint: 'Original link: https://www.unioncrate.com, key: -6de12ad3'
+            label: Link
+            name: '-6de12ad3'
+            widget: string
+          - hint: 'Original link: https://www.letsdeel.com/, key: 6bc2ea56'
+            label: Link
+            name: 6bc2ea56
+            widget: string
+          - hint: 'Original link: https://www.outdoortoys.co.uk/, key: 61db8eda'
+            label: Link
+            name: 61db8eda
+            widget: string
+          - hint: 'Original link: http://www.heavn-lights.com, key: 47f2746a'
+            label: Link
+            name: 47f2746a
+            widget: string
+          - hint: 'Original link: https://www.klaviyo.com/, key: -38419ac7'
+            label: Link
+            name: '-38419ac7'
+            widget: string
+          - hint: 'Original link: http://www.gordian.bio/, key: -230b3b1e'
+            label: Link
+            name: '-230b3b1e'
+            widget: string
+          - hint: 'Original link: https://www.aboutyou.ch/, key: -13e41e4c'
+            label: Link
+            name: '-13e41e4c'
+            widget: string
+          - hint: 'Original link: https://noibu.com/, key: 15556fd0'
+            label: Link
+            name: 15556fd0
+            widget: string
+          - hint: 'Original link: https://www.lockerverse.com/, key: -da79e3b'
+            label: Link
+            name: '-da79e3b'
+            widget: string
+          - hint: 'Original link: https://www.rebelle.com/en, key: -1bb1ec64'
+            label: Link
+            name: '-1bb1ec64'
+            widget: string
+          - hint: 'Original link: https://www.ydeon.com, key: 6b8abe26'
+            label: Link
+            name: 6b8abe26
+            widget: string
+          - hint: 'Original link: https://www.quilt.com, key: 7e2a311a'
+            label: Link
+            name: 7e2a311a
+            widget: string
+          - hint: 'Original link: https://www.numeralhq.com/, key: -23f0c105'
+            label: Link
+            name: '-23f0c105'
+            widget: string
+          - hint: 'Original link: https://www.enter.de/, key: -125cca4e'
+            label: Link
+            name: '-125cca4e'
+            widget: string
+          - hint: 'Original link: https://www.medmo.com/about/, key: 61272cd6'
+            label: Link
+            name: 61272cd6
+            widget: string
+          - hint: 'Original link: /jp/portfolio/, key: 6718481'
+            label: Link
+            name: '6718481'
+            widget: string
+          - hint: 'Original link: #, key: 23'
+            label: Link
+            name: '23'
+            widget: string
+          - hint: >-
+              Original link: https://www.wventures.de/jp/home/#about, key:
+              -4d2d167e
+            label: Link
+            name: '-4d2d167e'
+            widget: string
+          - hint: >-
+              Original link: https://www.wventures.de/jp/home/#contact, key:
+              -3654bf2b
+            label: Link
+            name: '-3654bf2b'
+            widget: string
+          - hint: >-
+              Original link: https://wventures.de/jp/home/#contact, key:
+              -99c9094
+            label: Link
+            name: '-99c9094'
+            widget: string
+      - label: Images
+        name: images
+        file: cms/_data/images.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Images
+          - label: Image
+            name: 43e82fc9
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i59a27c03
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i2a58adb9
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 3c24db19
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '47243e5'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 66c3cb49
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 76cf80f4
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-59212b9'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-7f7c73c0'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-567cc36'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 502ead16
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: b51d368
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 2a7281
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-61b3ecd0'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 50cdfc26
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-137c0172'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 5cb1e8ac
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-21415019'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 6124c950
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-2e18fa8e'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: f054776
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-62330fd9'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-4b07c9e4'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-5993b6de'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-6f84faa7'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 4d8b22a9
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 6da63de4
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '22258e71'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 4fc74407
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 2918355f
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-156a7ff3'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 5df1871a
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-b87a4be'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-492984ad'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 54b749b9
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-73c41685'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-20370416'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-58b7fa7b'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-410fcef3'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 412fd41e
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-7280bf22'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-589bbf84'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 7eca0ee3
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-7de4200b'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 251fcff1
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-4dadd576'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-4010f698'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-43b50f39'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 612debfc
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 268dffeb
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 4cd830d0
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-745ace06'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-61bb715a'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-70ab3ff9'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: dbda739
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 5dc8d87f
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-4ba82917'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 42fd643b
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+publish_mode: editorial_workflow

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2505 2111 115.8 127.142">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #31a4ff;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="_04_badge_headquarters" data-name="04 badge headquarters" transform="translate(-2916 -476)">
+    <circle id="Ellipse_216" data-name="Ellipse 216" class="cls-1" cx="57.9" cy="57.9" r="57.9" transform="translate(411 2587)"/>
+    <rect id="arrow" class="cls-1" width="20" height="20" transform="translate(469 2685.858) rotate(45)"/>
+    <path id="Path_1302" data-name="Path 1302" class="cls-2" d="M19.416,0A19.415,19.415,0,0,0,0,19.416C0,34.964,17.56,49.37,17.56,49.37a3.077,3.077,0,0,0,3.731,0s17.56-14.406,17.56-29.954A19.432,19.432,0,0,0,19.416,0Zm0,29.192a9.767,9.767,0,1,1,9.767-9.767A9.776,9.776,0,0,1,19.416,29.192Z" transform="translate(449 2620)"/>
+  </g>
+</svg>
